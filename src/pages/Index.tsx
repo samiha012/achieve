@@ -1,14 +1,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, CheckCircle, Users, Target, Zap, Award, Star, Phone, Mail, MapPin, Search, Play } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Target, Zap, Award, Star, Phone, Mail, MapPin, Search, Play, Menu, X  } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import Autoplay from 'embla-carousel-autoplay';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,56 +53,41 @@ const Index = () => {
     return { count, elementRef };
   };
 
-  // Hero slider images
-  const heroImages = [
-    'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2084&q=80',
-    'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    'https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    'https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
-  ];
-
   // Popular courses data
   const popularCourses = [
     {
       id: 1,
-      title: 'HSC Physics Complete Course',
-      thumbnail: 'https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-      price: '৳2,500',
+      title: 'ACS Achieve Varsity Exam Batch 2025',
+      thumbnail: 'https://i.postimg.cc/ZKbmMHG1/UNI-1.png',
+      price: '৳12,000',
       rating: 5
     },
     {
       id: 2,
-      title: 'HSC Chemistry Mastery',
-      thumbnail: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-      price: '৳2,300',
+      title: 'Achieve Engineering Exam Batch Exam 2025',
+      thumbnail: 'https://i.postimg.cc/d1rtm0bv/ENGR-1.png',
+      price: '৳12,00',
       rating: 5
     },
     {
       id: 3,
-      title: 'HSC Mathematics Advanced',
-      thumbnail: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-      price: '৳2,800',
+      title: 'ACS Achieve Medical Exam Batch 2025',
+      thumbnail: 'https://i.postimg.cc/C1cN4k1P/496514187-24080256401613260-5656178353673933252-n.jpg',
+      price: '৳10,000',
       rating: 5
     },
     {
       id: 4,
-      title: 'HSC Biology Complete',
-      thumbnail: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-      price: '৳2,200',
+      title: 'Achieve Varsity 2nd Time Exam Batch 25',
+      thumbnail: 'https://i.postimg.cc/mDVzc3kk/Achieve-Varsity-2nd-Time-Exam-Batch-25-YT-Thumbnail-1-1.png',
+      price: '৳6,000',
       rating: 5
     },
     {
       id: 5,
-      title: 'HSC English Preparation',
-      thumbnail: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-      price: '৳1,800',
-      rating: 5
-    },
-    {
-      id: 6,
-      title: 'HSC ICT Complete Guide',
-      thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-      price: '৳2,000',
+      title: 'Achieve Medical 2nd Time Exam Batch 25',
+      thumbnail: 'https://i.postimg.cc/Jnxbmx3Z/506706083-719667327340461-6689527597213006455-n.jpg',
+      price: '৳9,000',
       rating: 5
     }
   ];
@@ -121,6 +105,8 @@ const Index = () => {
             <div className="flex items-center">
               <div className="text-2xl font-bold text-blue-600">Etreeks</div>
             </div>
+
+            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <a href="#home" className="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
               <a href="#about" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
@@ -129,9 +115,36 @@ const Index = () => {
               <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
               <Button className="bg-blue-600 hover:bg-blue-700">Get Started</Button>
             </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-gray-700 hover:text-blue-600 transition-colors p-2"
+              >
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
           </div>
+
+          {/* Mobile Navigation */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden">
+              <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
+                <a href="#home" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Home</a>
+                <a href="#about" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">About</a>
+                <a href="#courses" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Courses</a>
+                <a href="#branches" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Branches</a>
+                <a href="#contact" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+                <div className="px-3 py-2">
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">Get Started</Button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
+
 
       {/* Hero Section with Slider */}
       <section id="home" className="pt-16 relative min-h-screen flex items-center bg-white">
@@ -139,12 +152,12 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-20">
             {/* Left Column - Text & Search */}
             <div className="space-y-8 text-center md:text-left">
-              <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
+              <h1 className="text-5xl lg:text-5xl font-bold leading-tight">
                 Excel in Your
-                <span className="text-blue-400 block">Exams</span>
+                <span className="text-blue-400"> Exams </span>
                 with Expert Guidance
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="text-sm text-gray-600 leading-relaxed">
                 Join thousands of students in our offline exam centers across Bangladesh. Search and enroll in the best HSC courses designed for success.
               </p>
 
@@ -173,7 +186,7 @@ const Index = () => {
             {/* Right Column - Image */}
             <div className="flex justify-center md:justify-end">
               <img
-                src="/path-to-your-image.jpg"
+                src="https://i.postimg.cc/zvp4RbX9/513670571-650677781349136-8449086125678648735-n.jpg"
                 alt="Hero Illustration"
                 className="w-full max-w-md object-contain"
               />
@@ -195,7 +208,7 @@ const Index = () => {
               <div className="text-xl text-blue-100">Different Courses</div>
             </div>
             <div ref={branchesCounter.elementRef} className="space-y-2">
-              <div className="text-5xl font-bold">{branchesCounter.count}+</div>
+              <div className="text-5xl font-bold">{branchesCounter.count}</div>
               <div className="text-xl text-blue-100">Branches Nationwide</div>
             </div>
           </div>
@@ -212,9 +225,9 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
             {popularCourses.map((course) => (
-              <Card key={course.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+              <Card key={course.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden  w-full max-w-sm">
                 <div className="relative">
                   <img
                     src={course.thumbnail}
@@ -232,7 +245,7 @@ const Index = () => {
                     {[...Array(course.rating)].map((_, i) => (
                       <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
                     ))}
-                    <span className="ml-2 text-sm text-gray-600">(4.9)</span>
+                    <span className="ml-2 text-sm text-gray-600">(5)</span>
                   </div>
 
                   <div className="flex items-center justify-between mb-4">
@@ -257,50 +270,50 @@ const Index = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                src="https://i.postimg.cc/MKGQ4dF1/508305375-3100296120130494-8979962659710976395-n.jpg"
                 alt="About us"
                 className="rounded-2xl shadow-xl"
               />
               <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl p-6 shadow-xl">
-                <div className="text-3xl font-bold text-blue-600">15+</div>
+                <div className="text-3xl font-bold text-blue-600">2+</div>
                 <div className="text-gray-600">Years Experience</div>
               </div>
             </div>
             <div className="space-y-6">
               <div className="space-y-4">
                 <h2 className="text-4xl font-bold text-gray-900">
-                  About Our Company
+                  About Us
                 </h2>
                 <p className="text-lg text-gray-600">
-                  We are a leading digital agency with over 15 years of experience in creating exceptional digital experiences for businesses worldwide.
+                  Apars Classroom (ASG Shop) is an online education center based in Dhaka, Bangladesh, specializing in providing high-quality educational resources to students across the country. Established in 2018, the platform has quickly gained popularity among Bangladeshi students, with over 900,000 students actively learning and developing their skills through its diverse range of courses.
                 </p>
               </div>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="h-6 w-6 text-green-500 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-gray-900">Expert Team</h3>
-                    <p className="text-gray-600">Our skilled professionals deliver top-quality solutions</p>
+                    <h3 className="font-semibold text-gray-900">Variety of Courses</h3>
+                    <p className="text-gray-600">HSC | Admission level courses to help you achieve your dreams</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="h-6 w-6 text-green-500 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-gray-900">Quality Assurance</h3>
-                    <p className="text-gray-600">We ensure every project meets the highest standards</p>
+                    <h3 className="font-semibold text-gray-900">Quality Books</h3>
+                    <p className="text-gray-600">We ensure access to the best study materials</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="h-6 w-6 text-green-500 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-gray-900">24/7 Support</h3>
-                    <p className="text-gray-600">Round-the-clock support for all our clients</p>
+                    <h3 className="font-semibold text-gray-900">Student portal</h3>
+                    <p className="text-gray-600">See leaderboard and track your progress</p>
                   </div>
                 </div>
               </div>
-              <Button className="bg-blue-600 hover:bg-blue-700 mt-6">
+              {/* <Button className="bg-blue-600 hover:bg-blue-700 mt-6">
                 Learn More About Us
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
@@ -398,7 +411,7 @@ const Index = () => {
       </section>
 
       {/* Portfolio Section */}
-      <section id="portfolio" className="py-20 bg-white">
+      {/* <section id="portfolio" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Latest Work</h2>
@@ -424,7 +437,7 @@ const Index = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Testimonials */}
       <section className="py-20 bg-gray-50">
@@ -471,7 +484,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+      {/* <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-white mb-6">
             Ready to Start Your Project?
@@ -488,7 +501,7 @@ const Index = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Contact Section */}
       <section id="contact" className="py-20 bg-white">
