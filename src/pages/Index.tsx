@@ -1,9 +1,10 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, CheckCircle, Users, Target, Zap, Award, Star, Phone, Mail, MapPin, Search, Play, Menu, X  } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Target, Zap, Award, Star, Phone, Mail, MapPin, Search, Play, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -111,7 +112,7 @@ const Index = () => {
               <a href="#home" className="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
               <a href="#about" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
               <a href="#courses" className="text-gray-700 hover:text-blue-600 transition-colors">Courses</a>
-              <a href="#branches" className="text-gray-700 hover:text-blue-600 transition-colors">Branches</a>
+              <Link to="/branches" className="text-gray-700 hover:text-blue-600 transition-colors">Branches</Link>
               <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
               <Button className="bg-blue-600 hover:bg-blue-700">Get Started</Button>
             </div>
@@ -181,6 +182,19 @@ const Index = () => {
                   Search Courses
                 </Button>
               </form>
+                  {/* Explore Branches Button */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <Link to="/branches">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 h-14 text-lg w-full sm:w-auto"
+                  >
+                    Explore Branches
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+              </div>
             </div>
 
             {/* Right Column - Image */}
@@ -190,26 +204,6 @@ const Index = () => {
                 alt="Hero Illustration"
                 className="w-full max-w-md object-contain"
               />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Statistics Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8 text-center text-white">
-            <div ref={studentsCounter.elementRef} className="space-y-2">
-              <div className="text-5xl font-bold">{studentsCounter.count.toLocaleString()}+</div>
-              <div className="text-xl text-blue-100">Students Enrolled</div>
-            </div>
-            <div ref={coursesCounter.elementRef} className="space-y-2">
-              <div className="text-5xl font-bold">{coursesCounter.count}+</div>
-              <div className="text-xl text-blue-100">Different Courses</div>
-            </div>
-            <div ref={branchesCounter.elementRef} className="space-y-2">
-              <div className="text-5xl font-bold">{branchesCounter.count}</div>
-              <div className="text-xl text-blue-100">Branches Nationwide</div>
             </div>
           </div>
         </div>
@@ -225,18 +219,15 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+          <div className="flex flex-wrap justify-center gap-8">
             {popularCourses.map((course) => (
               <Card key={course.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden  w-full max-w-sm">
                 <div className="relative">
                   <img
                     src={course.thumbnail}
                     alt={course.title}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2">
-                    <Play className="h-4 w-4 text-blue-600" />
-                  </div>
                 </div>
                 <CardContent className="p-6">
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">{course.title}</h3>
@@ -314,6 +305,26 @@ const Index = () => {
               {/* <Button className="bg-blue-600 hover:bg-blue-700 mt-6">
                 Learn More About Us
               </Button> */}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Statistics Section */}
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-8 text-center text-white">
+            <div ref={studentsCounter.elementRef} className="space-y-2">
+              <div className="text-5xl font-bold">{studentsCounter.count.toLocaleString()}+</div>
+              <div className="text-xl text-blue-100">Students Enrolled</div>
+            </div>
+            <div ref={coursesCounter.elementRef} className="space-y-2">
+              <div className="text-5xl font-bold">{coursesCounter.count}+</div>
+              <div className="text-xl text-blue-100">Different Courses</div>
+            </div>
+            <div ref={branchesCounter.elementRef} className="space-y-2">
+              <div className="text-5xl font-bold">{branchesCounter.count}</div>
+              <div className="text-xl text-blue-100">Branches Nationwide</div>
             </div>
           </div>
         </div>
