@@ -67,7 +67,7 @@ const Index = () => {
       id: 2,
       title: 'Achieve Engineering Exam Batch Exam 2025',
       thumbnail: 'https://i.postimg.cc/d1rtm0bv/ENGR-1.png',
-      price: '৳12,00',
+      price: '৳12,000',
       rating: 5
     },
     {
@@ -103,18 +103,18 @@ const Index = () => {
       <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <div className="text-2xl font-bold text-blue-600">Etreeks</div>
+            <div className="flex items-center h-10">
+             <img src="https://i.postimg.cc/FKF7XF9W/441544705-122103148808330502-3624163372952513294-n-1.jpg" alt=""  className="h-full max-h-full w-auto object-contain"/>
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#home" className="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
+              <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">Home</Link>
               <a href="#about" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
-              <a href="#courses" className="text-gray-700 hover:text-blue-600 transition-colors">Courses</a>
+              <Link to="https://aparsclassroom.com/shop/achieve/HSC_25/" target='_blank' className="text-gray-700 hover:text-blue-600 transition-colors">Courses</Link>
               <Link to="/branches" className="text-gray-700 hover:text-blue-600 transition-colors">Branches</Link>
               <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
-              <Button className="bg-blue-600 hover:bg-blue-700">Get Started</Button>
+              <Button className="bg-blue-600 hover:bg-blue-700"> <Link to="https://aparsclassroom.com/shop/achieve/HSC_25/" target='_blank'>Courses</Link></Button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -221,7 +221,7 @@ const Index = () => {
 
           <div className="flex flex-wrap justify-center gap-8">
             {popularCourses.map((course) => (
-              <Card key={course.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden  w-full max-w-sm">
+              <Card key={course.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden  w-full max-w-sm bg-gray-50">
                 <div className="relative">
                   <img
                     src={course.thumbnail}
@@ -229,7 +229,7 @@ const Index = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <CardContent className="p-6">
+                <CardContent className="px-6 py-2">
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">{course.title}</h3>
 
                   <div className="flex items-center mb-4">
@@ -276,7 +276,7 @@ const Index = () => {
                   About Us
                 </h2>
                 <p className="text-lg text-gray-600">
-                  Apars Classroom (ASG Shop) is an online education center based in Dhaka, Bangladesh, specializing in providing high-quality educational resources to students across the country. Established in 2018, the platform has quickly gained popularity among Bangladeshi students, with over 900,000 students actively learning and developing their skills through its diverse range of courses.
+                  ACHIEVE অফলাইন এক্সাম ব্যাচ এমনভাবে সাজানো হয়েছে যেনো একজন স্টুডেন্ট ACS সাথে অনলাইনে পড়াশোনা করে সেই অনুযায়ী অফলাইনে পর্যাপ্ত সংখ্যক পরীক্ষা দিয়ে নিজেকে প্রস্তুত করতে পারে 
                 </p>
               </div>
               <div className="space-y-4">
