@@ -577,7 +577,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="text-2xl font-bold text-blue-400 mb-4">Etreeks</div>
+              <div className="text-2xl font-bold text-blue-400 mb-4">Achieve</div>
               <p className="text-gray-400">
                 Creating exceptional digital experiences that drive business growth and success.
               </p>
