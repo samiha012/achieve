@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, CheckCircle, Users, Target, Zap, Award, Star, Phone, Mail, MapPin, Search, Play, Menu, X } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Target, Zap, Award, Star, Phone, Mail, MapPin, Search, Play, Menu, X, NotebookPen, Headset, Gift } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -334,9 +334,9 @@ const Index = () => {
       <section id="services" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Commitment</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We offer comprehensive digital solutions to help your business thrive in the digital landscape
+              We offer comprehensive exam routines and guidelines to ensure you are fully prepared for your exams
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -345,11 +345,10 @@ const Index = () => {
                 <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
                   <Zap className="h-8 w-8 text-blue-600 group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Web Development</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Extensive exams</h3>
                 <p className="text-gray-600 mb-6">
-                  Custom web solutions built with modern technologies and best practices for optimal performance.
+                  Daily Exams, weekly exams, paper final, subject final, model test and  home practice Exams to keep you on track and assess your progress of preparation.
                 </p>
-                <Button variant="outline" size="sm">Learn More</Button>
               </CardContent>
             </Card>
 
@@ -358,11 +357,10 @@ const Index = () => {
                 <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:bg-green-600 transition-colors">
                   <Target className="h-8 w-8 text-green-600 group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Digital Marketing</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Study Material</h3>
                 <p className="text-gray-600 mb-6">
-                  Strategic marketing campaigns that drive traffic, engagement, and conversions for your business.
+                   Study materials including notes, guides, and practice questions to aid your preparation.
                 </p>
-                <Button variant="outline" size="sm">Learn More</Button>
               </CardContent>
             </Card>
 
@@ -371,50 +369,46 @@ const Index = () => {
                 <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors">
                   <Users className="h-8 w-8 text-purple-600 group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">UI/UX Design</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Guideline session</h3>
                 <p className="text-gray-600 mb-6">
-                  Beautiful, intuitive designs that provide exceptional user experiences across all devices.
+                 Sessions from teachers and top students to guide you through the exam process and strategies for success.
                 </p>
-                <Button variant="outline" size="sm">Learn More</Button>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
               <CardContent className="p-8">
                 <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:bg-orange-600 transition-colors">
-                  <Award className="h-8 w-8 text-orange-600 group-hover:text-white" />
+                  <NotebookPen className="h-8 w-8 text-orange-600 group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Branding</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Solve Class</h3>
                 <p className="text-gray-600 mb-6">
-                  Complete branding solutions that create memorable and impactful brand identities.
+                  Online solve class and solve sheet will be provided to help you understand you lackings when participating in the exams.
                 </p>
-                <Button variant="outline" size="sm">Learn More</Button>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
               <CardContent className="p-8">
                 <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors">
-                  <Zap className="h-8 w-8 text-red-600 group-hover:text-white" />
+                  <Headset className="h-8 w-8 text-red-600 group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">SEO Optimization</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">24/7 QnA Service</h3>
                 <p className="text-gray-600 mb-6">
-                  Improve your search engine rankings and drive organic traffic to your website.
+                  Our dedicated support team is available 24/7 to answer your questions and provide helpful solutions to your every query. 
                 </p>
-                <Button variant="outline" size="sm">Learn More</Button>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
               <CardContent className="p-8">
                 <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors">
-                  <Target className="h-8 w-8 text-indigo-600 group-hover:text-white" />
+                  <Gift className="h-8 w-8 text-indigo-600 group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Consulting</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Gifts and Scholarships</h3>
                 <p className="text-gray-600 mb-6">
-                  Strategic consulting to help you make informed decisions about your digital transformation.
+                  Get a free premium t-shirt when you buy a course from us. Various Scholarships are available for top performers in our exams.
                 </p>
-                <Button variant="outline" size="sm">Learn More</Button>
               </CardContent>
             </Card>
           </div>
