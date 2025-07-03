@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Link } from 'react-router-dom';
 //rename file contactform
-import ContactForm from '@/components/Contactform';
+import ContactForm from '@/components/ContactForm';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
