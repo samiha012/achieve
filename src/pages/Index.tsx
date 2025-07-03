@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, CheckCircle, Users, Target, Zap, Award, Star, Phone, Mail, MapPin, Search, Play, Menu, X, NotebookPen, Headset, Gift } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Target, Zap, Award, Star, Phone, Mail, MapPin, Search, Play, Menu, X, NotebookPen, Headset, Gift, Contact } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Link } from 'react-router-dom';
+import ContactForm from '@/components/Contactform';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -104,14 +105,13 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center h-10">
-             <img src="https://i.postimg.cc/FKF7XF9W/441544705-122103148808330502-3624163372952513294-n-1.jpg" alt=""  className="h-full max-h-full w-auto object-contain"/>
+              <img src="https://i.postimg.cc/FKF7XF9W/441544705-122103148808330502-3624163372952513294-n-1.jpg" alt="" className="h-full max-h-full w-auto object-contain" />
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">Home</Link>
               <a href="#about" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
-              <Link to="https://aparsclassroom.com/shop/achieve/HSC_25/" target='_blank' className="text-gray-700 hover:text-blue-600 transition-colors">Courses</Link>
               <Link to="/branches" className="text-gray-700 hover:text-blue-600 transition-colors">Branches</Link>
               <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
               <Button className="bg-blue-600 hover:bg-blue-700"> <Link to="https://aparsclassroom.com/shop/achieve/HSC_25/" target='_blank'>Courses</Link></Button>
@@ -134,11 +134,10 @@ const Index = () => {
               <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
                 <a href="#home" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Home</a>
                 <a href="#about" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">About</a>
-                <a href="#courses" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Courses</a>
                 <a href="#branches" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Branches</a>
                 <a href="#contact" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
                 <div className="px-3 py-2">
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700">Get Started</Button>
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700"><Link to="https://aparsclassroom.com/shop/achieve/HSC_25/" target='_blank'> Courses</Link></Button>
                 </div>
               </div>
             </div>
@@ -147,23 +146,22 @@ const Index = () => {
       </nav>
 
 
-      {/* Hero Section with Slider */}
+      {/* Hero Section */}
       <section id="home" className="pt-16 relative min-h-screen flex items-center bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-20">
-            {/* Left Column - Text & Search */}
             <div className="space-y-8 text-center md:text-left">
               <h1 className="text-5xl lg:text-5xl font-bold leading-tight">
                 Excel in Your
-                <span className="text-blue-400"> Exams </span>
-                with Expert Guidance
+                <span className="text-blue-500"> Exams </span>
+                with Achieve Exam Batches
               </h1>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Join thousands of students in our offline exam centers across Bangladesh. Search and enroll in the best HSC courses designed for success.
+                Join thousands of students in our offline exam centers across Bangladesh. Enroll in the best HSC and admission exam batch courses designed for students.
               </p>
 
               {/* Search Bar */}
-              <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4">
+              {/* <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4">
                 <div className="relative flex-1">
                   <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                   <Input
@@ -181,19 +179,30 @@ const Index = () => {
                 >
                   Search Courses
                 </Button>
-              </form>
-                  {/* Explore Branches Button */}
+              </form> */}
+              {/* Explore Branches Button */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Link to="/branches">
                   <Button
-                    variant="outline"
-                    size="lg"
-                    className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 h-14 text-lg w-full sm:w-auto"
+                    variant="ghost"
+                    size="sm"
+                    className="border border-blue-500 text-blue-500 hover:bg-blue-50 hover:text-blue-700 px-5 h-10 text-sm font-medium rounded-md transition"
                   >
                     Explore Branches
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-1 h-4 w-4" />
                   </Button>
                 </Link>
+
+                <Link to="https://aparsclassroom.com/shop/achieve/HSC_25/" target="_blank">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="border border-blue-500 text-blue-500 hover:bg-blue-50 hover:text-blue-700 px-5 h-10 text-sm font-medium rounded-md transition"
+                  >
+                    Visit On-going Courses
+                  </Button>
+                </Link>
+
               </div>
             </div>
 
@@ -249,6 +258,7 @@ const Index = () => {
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </CardContent>
+                <br />
               </Card>
             ))}
           </div>
@@ -276,7 +286,7 @@ const Index = () => {
                   About Us
                 </h2>
                 <p className="text-lg text-gray-600">
-                  ACHIEVE অফলাইন এক্সাম ব্যাচ এমনভাবে সাজানো হয়েছে যেনো একজন স্টুডেন্ট ACS সাথে অনলাইনে পড়াশোনা করে সেই অনুযায়ী অফলাইনে পর্যাপ্ত সংখ্যক পরীক্ষা দিয়ে নিজেকে প্রস্তুত করতে পারে 
+                  ACHIEVE অফলাইন এক্সাম ব্যাচ এমনভাবে সাজানো হয়েছে যেনো একজন স্টুডেন্ট ACS সাথে অনলাইনে পড়াশোনা করে সেই অনুযায়ী অফলাইনে পর্যাপ্ত সংখ্যক পরীক্ষা দিয়ে নিজেকে প্রস্তুত করতে পারে
                 </p>
               </div>
               <div className="space-y-4">
@@ -359,7 +369,7 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Study Material</h3>
                 <p className="text-gray-600 mb-6">
-                   Study materials including notes, guides, and practice questions to aid your preparation.
+                  Study materials including notes, guides, and practice questions to aid your preparation.
                 </p>
               </CardContent>
             </Card>
@@ -371,7 +381,7 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Guideline session</h3>
                 <p className="text-gray-600 mb-6">
-                 Sessions from teachers and top students to guide you through the exam process and strategies for success.
+                  Sessions from teachers and top students to guide you through the exam process and strategies for success.
                 </p>
               </CardContent>
             </Card>
@@ -395,7 +405,7 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">24/7 QnA Service</h3>
                 <p className="text-gray-600 mb-6">
-                  Our dedicated support team is available 24/7 to answer your questions and provide helpful solutions to your every query. 
+                  Our dedicated support team is available 24/7 to answer your questions and provide helpful solutions to your every query.
                 </p>
               </CardContent>
             </Card>
@@ -448,15 +458,15 @@ const Index = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">What Our Clients Say</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">What Our Students Say</h2>
             <p className="text-xl text-gray-600">Don't just take our word for it</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                name: "Sarah Johnson",
-                role: "CEO, TechStart",
-                content: "Etreeks transformed our digital presence completely. Their attention to detail and professional approach exceeded our expectations."
+                name: "নিহাল",
+                role: "BUET ১৬ তম",
+                content: "BUET এ ভর্তি পরীক্ষার সময় মনে হচ্ছিল Achieve এই পরীক্ষা দিচ্ছি।"
               },
               {
                 name: "Michael Chen",
@@ -518,72 +528,52 @@ const Index = () => {
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="space-y-8">
               <div className="flex items-start space-x-4">
-                <div className="bg-blue-100 p-3 rounded-full">
-                  <Phone className="h-6 w-6 text-blue-600" />
+                <div className="bg-green-100 p-3 rounded-full">
+                  <Phone className="h-6 w-6 text-green-600" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Phone</h3>
-                  <p className="text-gray-600">+1 (555) 123-4567</p>
+                  <p className="text-gray-600">+09639-102552</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
                 <div className="bg-blue-100 p-3 rounded-full">
-                  <Mail className="h-6 w-6 text-blue-600" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-facebook-icon lucide-facebook h-6 w-6 text-blue-600"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Email</h3>
-                  <p className="text-gray-600">hello@etreeks.com</p>
+                  <h3 className="font-semibold text-gray-900">Page</h3>
+                  <p className="text-gray-600"><Link to="https://www.facebook.com/ACSAchieveCentre" target="_blank">Achieve Exam Centre </Link></p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
-                <div className="bg-blue-100 p-3 rounded-full">
-                  <MapPin className="h-6 w-6 text-blue-600" />
+                <div className="bg-orange-100 p-3 rounded-full">
+                  <MapPin className="h-6 w-6 text-orange-400" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Office</h3>
-                  <p className="text-gray-600">123 Business St, City, State 12345</p>
+                  <h3 className="font-semibold text-gray-900">Branches</h3>
+                  <p className="text-gray-600"><Link to="/branches" target="_blank">View Branches across Bangladesh</Link></p>
                 </div>
               </div>
             </div>
             <Card className="p-8">
-              <form className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                    <input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                    <input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                  <input type="email" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                  <textarea rows={4} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                </div>
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">Send Message</Button>
-              </form>
+             <ContactForm />
             </Card>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-gray-100 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="text-2xl font-bold text-blue-400 mb-4">Achieve</div>
+              <div className="text-2xl font-bold text-blue-500 mb-4">Achieve</div>
               <p className="text-gray-400">
                 Creating exceptional digital experiences that drive business growth and success.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Services</h3>
+              <h3 className="font-semibold mb-4 text-gray-700">Services</h3>
               <ul className="space-y-2 text-gray-400">
                 <li>Web Development</li>
                 <li>Digital Marketing</li>
@@ -592,7 +582,7 @@ const Index = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Company</h3>
+              <h3 className="font-semibold mb-4 text-gray-700">Company</h3>
               <ul className="space-y-2 text-gray-400">
                 <li>About Us</li>
                 <li>Our Team</li>
@@ -601,7 +591,7 @@ const Index = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Connect</h3>
+              <h3 className="font-semibold mb-4 text-gray-700">Connect</h3>
               <ul className="space-y-2 text-gray-400">
                 <li>LinkedIn</li>
                 <li>Twitter</li>
