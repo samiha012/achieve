@@ -191,7 +191,6 @@ const Branches = () => {
       {/* Header */}
       <div className="bg-gray-100 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Back Button */}
           <div className="flex items-center mb-8">
             <Link to="/">
               <Button
@@ -203,9 +202,7 @@ const Branches = () => {
               </Button>
             </Link>
           </div>
-          {/* Section Title */}
           <div className="text-center space-y-4">
-            {/* Map Icon */}
             <div className="flex justify-center">
               <div className="bg-blue-600 text-white p-4 rounded-full shadow-lg">
                 <MapPin className="h-6 w-6" />
