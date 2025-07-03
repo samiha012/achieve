@@ -130,7 +130,7 @@ const Index = () => {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Link to="https://aparsclassroom.com/shop/achieve/HSC_25/" target="_blank">
+                <Link to="/courses" target="_blank">
                   <Button
                     variant="ghost"
                     size="lg"
