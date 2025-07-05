@@ -15,14 +15,14 @@ const Courses = () => {
     setError(null);
     
     // Simple GET request - no need for UID in frontend
-    fetch(`${import.meta.env.VITE_API_URL}/api/proxy/courses`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/product/achieve-courses?uid=${import.meta.env.VITE_UID}`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch courses');
         return res.json();
       })
       .then((data) => {
         // Data is already filtered for offline courses on the backend
-        setCoursesData(data.products || []);
+        setCoursesData(data.courses || []);
         setLoading(false);
       })
       .catch((err) => {
