@@ -3,8 +3,6 @@ import { ArrowBigLeft, Book, BookOpenCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
-const API_URL = `https://crm.apars.shop/product/o2o-products?uid=${import.meta.env.VITE_UID}`;
-
 const Courses = () => {
   const [coursesData, setCoursesData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,15 +13,16 @@ const Courses = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    fetch(API_URL)
+    
+    // Simple GET request - no need for UID in frontend
+    fetch(`${import.meta.env.VITE_API_URL}/api/proxy/courses`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch courses');
         return res.json();
       })
       .then((data) => {
-        // Only keep courses with Platform === 'Offline'
-        const offlineCourses = (data.products || []).filter((course) => course.Platform === 'Offline');
-        setCoursesData(offlineCourses);
+        // Data is already filtered for offline courses on the backend
+        setCoursesData(data.products || []);
         setLoading(false);
       })
       .catch((err) => {

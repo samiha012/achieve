@@ -27,59 +27,31 @@ const Branches = () => {
   const pageSize = 10;
   const [total, setTotal] = useState(0);
 
-  const fetchBranches = async () => {
-    try {
-      setLoading(true);
-      const formData = new URLSearchParams();
+const fetchBranches = async () => {
+  try {
+    setLoading(true);
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/proxy/branches?page=${page}&pageSize=${pageSize}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
-      const start = (page - 1) * pageSize;
+    if (!response.ok) throw new Error('Failed to fetch');
 
-      formData.append('draw', '1');
-      formData.append('start', start.toString());
-      formData.append('length', pageSize.toString());
+    const data = await response.json();
 
-      const columnNames = [
-        'name', 'photo', 'address', 'phone', 'email',
-        'coach', 'tagline', 'instruction', 'gmap', 'updated', 'created', 'status'
-      ];
-
-      columnNames.forEach((col, index) => {
-        formData.append(`columns[${index}][data]`, col);
-        formData.append(`columns[${index}][name]`, '');
-        formData.append(`columns[${index}][searchable]`, 'true');
-        formData.append(`columns[${index}][orderable]`, 'true');
-        formData.append(`columns[${index}][search][value]`, '');
-        formData.append(`columns[${index}][search][regex]`, 'false');
-      });
-
-      formData.append('order[0][column]', '9');
-      formData.append('order[0][dir]', 'desc');
-      formData.append('search[value]', '');
-      formData.append('search[regex]', 'false');
-
-      const response = await fetch(
-        `https://crm.apars.shop/branch/all?uid=${import.meta.env.VITE_UID}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: formData.toString(),
-        }
-      );
-
-      if (!response.ok) throw new Error('Failed to fetch');
-
-      const data = await response.json();
-
-      setBranches(data.data || []);
-      setTotal(data.recordsTotal || 0);
-    } catch (err: any) {
-      setError(err.message || 'Error occurred');
-    } finally {
-      setLoading(false);
-    }
-  };
+    setBranches(data.data || []);
+    setTotal(data.recordsTotal || 0);
+  } catch (err: any) {
+    setError(err.message || 'Error occurred');
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchBranches();
