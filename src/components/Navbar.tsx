@@ -17,7 +17,7 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">Home</Link>
-            <a href="#about" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
+            <Link to="/about" className="text-gray-700 hover:text-blue-600 transition-colors">Features</Link>
             <Link to="/branches" className="text-gray-700 hover:text-blue-600 transition-colors">Branches</Link>
             <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
             <Button className="bg-blue-600 hover:bg-blue-700">
@@ -41,7 +41,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
               <a href="#home" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Home</a>
-              <a href="#about" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">About</a>
+              <Link to="/about" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">About</Link>
               <Link to="/branches" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Branches</Link>
               <a href="#contact" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
               <div className="px-3 py-2">

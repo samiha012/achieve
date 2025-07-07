@@ -62,35 +62,40 @@ const Index = () => {
       title: 'ACS Achieve Varsity Exam Batch 2025',
       thumbnail: 'https://i.postimg.cc/ZKbmMHG1/UNI-1.png',
       price: '৳12,000',
-      rating: 5
+      rating: 5,
+      link: "https://aparsclassroom.com/shop/achieve/HSC_25/Varsity/index.html"
     },
     {
       id: 2,
       title: 'Achieve Engineering Exam Batch Exam 2025',
       thumbnail: 'https://i.postimg.cc/d1rtm0bv/ENGR-1.png',
       price: '৳12,000',
-      rating: 5
+      rating: 5,
+      link: "https://aparsclassroom.com/shop/achieve/HSC_25/Engineering/index.html"
     },
     {
       id: 3,
       title: 'ACS Achieve Medical Exam Batch 2025',
       thumbnail: 'https://i.postimg.cc/C1cN4k1P/496514187-24080256401613260-5656178353673933252-n.jpg',
       price: '৳10,000',
-      rating: 5
+      rating: 5,
+      link: "https://aparsclassroom.com/shop/achieve/HSC_25/Medical/index.html"
     },
     {
       id: 4,
       title: 'Achieve Varsity 2nd Time Exam Batch 25',
       thumbnail: 'https://i.postimg.cc/mDVzc3kk/Achieve-Varsity-2nd-Time-Exam-Batch-25-YT-Thumbnail-1-1.png',
       price: '৳6,000',
-      rating: 5
+      rating: 5,
+      link: "https://aparsclassroom.com/shop/achieve/HSC_25/Varsity2ndTimer/"
     },
     {
       id: 5,
       title: 'Achieve Medical 2nd Time Exam Batch 25',
       thumbnail: 'https://i.postimg.cc/Jnxbmx3Z/506706083-719667327340461-6689527597213006455-n.jpg',
       price: '৳9,000',
-      rating: 5
+      rating: 5,
+      link: "https://aparsclassroom.com/shop/achieve/HSC_25/Medical2ndTimer/"
     }
   ];
 
@@ -193,10 +198,12 @@ const Index = () => {
                     <div className="text-sm text-gray-500 line-through">৳{parseInt(course.price.replace('৳', '')) + 500}</div>
                   </div>
 
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 group">
-                    View Details
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  <Link to={course.link}>
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 group">
+                      View Details
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
                 </CardContent>
                 <br />
               </Card>
@@ -407,14 +414,14 @@ const Index = () => {
                 content: "BUET এ ভর্তি পরীক্ষার সময় মনে হচ্ছিল Achieve এই পরীক্ষা দিচ্ছি।"
               },
               {
-                name: "Michael Chen",
-                role: "Marketing Director, GrowthCo",
-                content: "Working with Etreeks was a game-changer for our business. They delivered results that drove real growth and engagement."
+                name: "অরোরা আপু",
+                role: "BUET ৭৭তম",
+                content: "বেশি বেশি পরীক্ষা দেওয়ার অভ্যাসের ফলে আস্তে আস্তে নার্ভাসনেস কমে গেছে, আর তার কারণেই আজ BUET এ"
               },
               {
-                name: "Emily Davis",
-                role: "Founder, InnovateLab",
-                content: "The team at Etreeks is incredibly talented and professional. They brought our vision to life better than we imagined."
+                name: "Rohan",
+                role: "RU 1st",
+                content: "চান্স না পেলে আশেপাশের মানুষ কথা শোনায়, ফ্যামিলি সাপোর্ট করে না। কিন্তু চেষ্টা ছাড়া যাবে না।"
               }
             ].map((testimonial, index) => (
               <Card key={index} className="p-8 bg-white rounded-2xl shadow-lg flex flex-col items-center text-center">
@@ -494,7 +501,7 @@ const Index = () => {
               </div>
             </div>
             <Card className="p-8 bg-gray-50 rounded-2xl shadow-lg">
-             <ContactForm />
+              <ContactForm />
             </Card>
           </div>
         </div>

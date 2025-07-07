@@ -34,7 +34,7 @@ const Branches = () => {
 
       const start = (page - 1) * pageSize;
 
-      formData.append('draw', page.toString());
+      formData.append('draw', '1');
       formData.append('start', start.toString());
       formData.append('length', pageSize.toString());
 
@@ -58,7 +58,7 @@ const Branches = () => {
       formData.append('search[regex]', 'false');
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/branch/all?uid=${import.meta.env.VITE_UID}`,
+        `${import.meta.env.VITE_BACKEND_URL}/branch/all?uid=${import.meta.env.VITE_UID}`,
         {
           method: 'POST',
           headers: {

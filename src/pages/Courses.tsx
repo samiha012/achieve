@@ -15,7 +15,7 @@ const Courses = () => {
     setError(null);
     
     // Simple GET request - no need for UID in frontend
-    fetch(`${import.meta.env.VITE_API_URL}/product/achieve-courses?uid=${import.meta.env.VITE_UID}`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/product/achieve-courses?uid=${import.meta.env.VITE_UID}`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch courses');
         return res.json();
