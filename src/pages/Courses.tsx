@@ -69,11 +69,37 @@ const Courses = () => {
           </div>
         </div>
       </div>
+      {/* Mobile search/filter bar */}
+      <div className="md:hidden px-4 pt-6 flex flex-col gap-4 bg-white/90 border-b border-gray-100 shadow-sm">
+        <input
+          type="text"
+          placeholder="Search courses..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-base shadow-sm"
+        />
+        <div>
+          <label className="font-semibold mb-2 block text-gray-700 text-lg">
+            Filter by Category
+          </label>
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 text-base shadow-sm bg-white"
+          >
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
       {/* Main layout */}
       <div className="flex min-h-[70vh]">
-        {/* Sidebar */}
+        {/* Sidebar (desktop only) */}
         <aside
-          className="w-80 bg-white/90 p-8 border-r border-gray-100 flex flex-col gap-8 shadow-md"
+          className="w-80 bg-white/90 p-8 border-r border-gray-100 flex-col gap-8 shadow-md hidden md:flex"
         >
           <div>
             <input

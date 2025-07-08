@@ -4,12 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Link } from 'react-router-dom';
-//rename file contactform
+import axios from 'axios';
 import ContactForm from '@/components/ContactForm';
+import Testimonials from '@/components/Testimonial';
 
 const Index = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [popularCourses, setPopularCourses] = useState([]);
 
   // const handleSearch = (e: React.FormEvent) => {
   //   e.preventDefault();
@@ -24,6 +24,19 @@ const Index = () => {
     const [count, setCount] = useState(0);
     const [hasStarted, setHasStarted] = useState(false);
     const elementRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const fetchFeatured = async () => {
+        try {
+          const res = await axios.get('http://localhost:3001/api/courses/featured'); 
+          setPopularCourses(res.data); 
+        } catch (error) {
+          console.error('Error fetching featured courses:', error);
+        }
+      };
+
+      fetchFeatured();
+    }, []);
 
     useEffect(() => {
       const observer = new IntersectionObserver(
@@ -54,50 +67,6 @@ const Index = () => {
 
     return { count, elementRef };
   };
-
-  // Popular courses data
-  const popularCourses = [
-    {
-      id: 1,
-      title: 'ACS Achieve Varsity Exam Batch 2025',
-      thumbnail: 'https://i.postimg.cc/ZKbmMHG1/UNI-1.png',
-      price: '৳12,000',
-      rating: 5,
-      link: "https://aparsclassroom.com/shop/achieve/HSC_25/Varsity/index.html"
-    },
-    {
-      id: 2,
-      title: 'Achieve Engineering Exam Batch Exam 2025',
-      thumbnail: 'https://i.postimg.cc/d1rtm0bv/ENGR-1.png',
-      price: '৳12,000',
-      rating: 5,
-      link: "https://aparsclassroom.com/shop/achieve/HSC_25/Engineering/index.html"
-    },
-    {
-      id: 3,
-      title: 'ACS Achieve Medical Exam Batch 2025',
-      thumbnail: 'https://i.postimg.cc/C1cN4k1P/496514187-24080256401613260-5656178353673933252-n.jpg',
-      price: '৳10,000',
-      rating: 5,
-      link: "https://aparsclassroom.com/shop/achieve/HSC_25/Medical/index.html"
-    },
-    {
-      id: 4,
-      title: 'Achieve Varsity 2nd Time Exam Batch 25',
-      thumbnail: 'https://i.postimg.cc/mDVzc3kk/Achieve-Varsity-2nd-Time-Exam-Batch-25-YT-Thumbnail-1-1.png',
-      price: '৳6,000',
-      rating: 5,
-      link: "https://aparsclassroom.com/shop/achieve/HSC_25/Varsity2ndTimer/"
-    },
-    {
-      id: 5,
-      title: 'Achieve Medical 2nd Time Exam Batch 25',
-      thumbnail: 'https://i.postimg.cc/Jnxbmx3Z/506706083-719667327340461-6689527597213006455-n.jpg',
-      price: '৳9,000',
-      rating: 5,
-      link: "https://aparsclassroom.com/shop/achieve/HSC_25/Medical2ndTimer/"
-    }
-  ];
 
   const studentsCounter = useCounter(10000);
   const coursesCounter = useCounter(8);
@@ -174,41 +143,44 @@ const Index = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-8">
-            {popularCourses.map((course) => (
-              <Card key={course.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden  w-full max-w-sm bg-gray-50">
+            {popularCourses.map((course, index) => (
+              <Card key={course.productId || index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden w-full max-w-sm bg-gray-50">
                 <div className="relative">
                   <img
-                    src={course.thumbnail}
-                    alt={course.title}
+                    src={course.ProductImage}
+                    alt={course.productName}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <CardContent className="px-6 py-2">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{course.title}</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{course.productFullName}</h3>
 
                   <div className="flex items-center mb-4">
-                    {[...Array(course.rating)].map((_, i) => (
+                    {[...Array(5)].map((_, i) => (
                       <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
                     ))}
                     <span className="ml-2 text-sm text-gray-600">(5)</span>
                   </div>
 
                   <div className="flex items-center justify-between mb-4">
-                    <div className="text-2xl font-bold text-blue-600">{course.price}</div>
-                    <div className="text-sm text-gray-500 line-through">৳{parseInt(course.price.replace('৳', '')) + 500}</div>
+                    <div className="text-2xl font-bold text-blue-600">৳{course.currency_amount}</div>
+                    <div className="text-sm text-gray-500 line-through">
+                      ৳{parseInt(course.currency_amount) + 500}
+                    </div>
                   </div>
 
-                  <Link to={course.link}>
+                  <a href={course.Permalink} target="_blank" rel="noopener noreferrer">
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 group">
                       View Details
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
-                  </Link>
+                  </a>
                 </CardContent>
                 <br />
               </Card>
             ))}
           </div>
+
         </div>
       </section>
 
@@ -400,48 +372,7 @@ const Index = () => {
       </section> */}
 
       {/* Testimonials */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">What Our Students Say</h2>
-            <p className="text-xl text-gray-600">Don't just take our word for it</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "নিহাল",
-                role: "BUET ১৬ তম",
-                content: "BUET এ ভর্তি পরীক্ষার সময় মনে হচ্ছিল Achieve এই পরীক্ষা দিচ্ছি।"
-              },
-              {
-                name: "অরোরা আপু",
-                role: "BUET ৭৭তম",
-                content: "বেশি বেশি পরীক্ষা দেওয়ার অভ্যাসের ফলে আস্তে আস্তে নার্ভাসনেস কমে গেছে, আর তার কারণেই আজ BUET এ"
-              },
-              {
-                name: "Rohan",
-                role: "RU 1st",
-                content: "চান্স না পেলে আশেপাশের মানুষ কথা শোনায়, ফ্যামিলি সাপোর্ট করে না। কিন্তু চেষ্টা ছাড়া যাবে না।"
-              }
-            ].map((testimonial, index) => (
-              <Card key={index} className="p-8 bg-white rounded-2xl shadow-lg flex flex-col items-center text-center">
-                <CardContent className="space-y-4 flex flex-col items-center">
-                  <div className="flex text-yellow-400 justify-center">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-current" />
-                    ))}
-                  </div>
-                  <p className="text-gray-600 italic">"{testimonial.content}"</p>
-                  <div>
-                    <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                    <div className="text-sm text-gray-500">{testimonial.role}</div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Testimonials />
 
       {/* CTA Section */}
       {/* <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">

@@ -19,10 +19,7 @@ const Navbar = () => {
             <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">Home</Link>
             <Link to="/about" className="text-gray-700 hover:text-blue-600 transition-colors">Features</Link>
             <Link to="/branches" className="text-gray-700 hover:text-blue-600 transition-colors">Branches</Link>
-            <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              <Link to="/courses">Courses</Link>
-            </Button>
+            <Link to="/courses" className="text-gray-700 hover:text-blue-600 transition-colors">Visit Courses</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -43,7 +40,6 @@ const Navbar = () => {
               <a href="#home" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Home</a>
               <Link to="/about" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">About</Link>
               <Link to="/branches" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Branches</Link>
-              <a href="#contact" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
               <div className="px-3 py-2">
                 <Button className="w-full bg-blue-600 hover:bg-blue-700">
                   <Link to="/courses" target='_blank'> Courses</Link>
