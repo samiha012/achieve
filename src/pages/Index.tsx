@@ -445,7 +445,7 @@ const Index = () => {
             <div>
               <div className="text-2xl font-bold text-blue-500 mb-4">Achieve</div>
               <p className="text-gray-400">
-                Creating exceptional digital experiences that drive student success.
+                A sister concern of ACS for offline exam centres.
               </p>
             </div>
             <div>
