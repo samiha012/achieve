@@ -28,8 +28,8 @@ const Index = () => {
     useEffect(() => {
       const fetchFeatured = async () => {
         try {
-          const res = await axios.get('http://localhost:3001/api/courses/featured'); 
-          setPopularCourses(res.data); 
+          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/courses/featured`);
+          setPopularCourses(res.data);
         } catch (error) {
           console.error('Error fetching featured courses:', error);
         }
@@ -68,15 +68,15 @@ const Index = () => {
     return { count, elementRef };
   };
 
-  const studentsCounter = useCounter(10000);
-  const coursesCounter = useCounter(8);
-  const branchesCounter = useCounter(14);
+  const studentsCounter = useCounter(12000);
+  const coursesCounter = useCounter(12);
+  const branchesCounter = useCounter(15);
 
   return (
     <div className="min-h-screen bg-white">
 
       {/* Hero Section */}
-      <section id="home" className="pt-16 relative min-h-screen flex items-center bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-hidden">
+      <section id="home" className="relative min-h-screen flex items-center bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-200 opacity-30 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-0 w-80 h-80 bg-purple-200 opacity-20 rounded-full blur-2xl" />
@@ -128,6 +128,22 @@ const Index = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 hidden md:block">
+          <div className="flex flex-col items-center space-y-2 animate-bounce">
+            {/* <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+              <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
+            </div> */}
+            <svg
+              className="w-6 h-6 font-bold text-gray-400 animate-pulse"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              style={{ animationDelay: '0.2s' }}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
           </div>
         </div>
       </section>

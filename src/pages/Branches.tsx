@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 interface Branch {
   text: string;
+  _id: string;
   address: string;
   name: string;
   gmap: string;
@@ -120,7 +121,7 @@ const Branches = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {branches.map((branch) => (
                   <Card
-                    key={branch.id}
+                    key={branch._id}
                     className="group transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden rounded-xl"
                   >
                     <CardContent className="p-0">
