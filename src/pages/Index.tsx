@@ -101,7 +101,6 @@ const Index = () => {
                     className="border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-7 h-12 text-base font-semibold rounded-lg shadow-md transition-all duration-200"
                   >
                     Explore Branches
-                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
                 <Link to="/courses" target="_blank">
@@ -111,6 +110,7 @@ const Index = () => {
                     className="border border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white px-7 h-12 text-base font-semibold rounded-lg shadow-md transition-all duration-200"
                   >
                     Visit On-going Courses
+                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
               </div>
@@ -135,14 +135,15 @@ const Index = () => {
             {/* <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
               <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
             </div> */}
+
             <svg
-              className="w-6 h-6 font-bold text-gray-400 animate-pulse"
+              className="w-8 h-8 drop-shadow-lg animate-bounce"
               fill="none"
-              stroke="currentColor"
+              stroke="purple"
               viewBox="0 0 24 24"
-              style={{ animationDelay: '0.2s' }}
+              style={{ filter: 'drop-shadow(0 0 8px rgba(255, 205, 255, 0.6))' }}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </div>
         </div>
