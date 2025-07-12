@@ -10,6 +10,7 @@ import Courses from "./pages/Courses";
 import Layout from './components/Layout';
 import About from "./pages/About";
 import Notice from "./pages/Notice";
+import FacebookPosts from "./pages/FacebookPosts";
 
 const queryClient = new QueryClient();
 
@@ -22,12 +23,12 @@ const App = () => (
         <Layout>
           <Routes>
             <Route path="/" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="/features" element={<About />} />
             <Route path="/notice" element={<Notice />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/branches" element={<Branches />} />
             <Route path="/courses" element={<Courses />} />
+            <Route path="/facebook-posts" element={<FacebookPosts />} />
           </Routes>
         </Layout>
       </BrowserRouter>
