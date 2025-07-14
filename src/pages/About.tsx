@@ -1,3 +1,4 @@
+import { PencilLine } from "lucide-react";
 import React from "react";
 
 const features = [
@@ -48,19 +49,30 @@ const values = [
 
 const About: React.FC = () => {
   return (
-    <article className="min-h-screen bg-white py-16 px-4 sm:px-8 lg:px-16">
-      <header className="max-w-3xl mx-auto mb-20 text-center">
-        <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6 tracking-tight">
-          The Best Exam Portal for Students
-        </h1>
-        <p className="text-base md:text-lg text-gray-500">
-         Get to know the features and values that make our exam portal the best choice for students. We are dedicated to transforming the exam experience into a journey of growth, learning, and achievement.
-        </p>
-      </header>
+    <article className="">
+       
+       {/* Header */}
+      <div className="bg-gray-100 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4">
+            <div className="flex justify-center">
+              <div className="bg-blue-600 text-white p-4 rounded-full shadow-lg">
+                <PencilLine className="h-6 w-6" />
+              </div>
+            </div>
+
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800">Our Features</h1>
+
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+               Get to know the features and values that make our exam portal the best choice for students. We are dedicated to transforming the exam experience into a journey of growth, learning, and achievement.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Our Story */}
       {/* <section className="max-w-2xl mx-auto mb-24">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Story</h2>
+        <h2 className="text-3xl font-bold text-gray-700 mb-4">Our Story</h2>
         <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-2">
           We began with a simple question: <span className="italic">What if exams could help you grow, not just grade you?</span> Frustrated by slow, outdated systems and a lack of meaningful feedback, we set out to build a platform where every student could see their progress, understand their mistakes, and be celebrated for their achievements.
         </p>
@@ -70,8 +82,7 @@ const About: React.FC = () => {
       </section> */}
 
       {/* Features */}
-      <section className="max-w-6xl mx-auto mb-24">
-        <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">Our features</h2>
+      <section className="max-w-6xl mx-auto mt-10 px-4 sm:px-8 lg:px-16">
         <div className="grid gap-16 md:grid-cols-2">
           {features.map((feature) => (
             <figure key={feature.title} className="flex flex-col items-center text-center space-y-6">
@@ -81,7 +92,7 @@ const About: React.FC = () => {
                 className="w-full max-w-md h-64 rounded-lg object-contain "
               />
               <figcaption>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                <h3 className="text-2xl font-semibold text-gray-700 mb-2">{feature.title}</h3>
                 <p className="text-base md:text-lg text-gray-600 leading-relaxed">{feature.description}</p>
               </figcaption>
             </figure>
@@ -89,8 +100,8 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      <footer className="max-w-2xl mx-auto text-center mt-24">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to see your progress in a whole new way?</h2>
+      <footer className="max-w-2xl mx-auto text-center my-10 md:mt-40">
+        <h2 className="text-3xl font-bold text-gray-700 mb-4">Ready to see your progress in a whole new way?</h2>
         <p className="text-lg text-gray-700 mb-8">
           Join thousands of students who are transforming their exam experience. Discover your strengths, learn from your mistakes, and get the best support from us to achieve your dreams.
         </p>
