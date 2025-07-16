@@ -10,7 +10,7 @@ import Courses from "./pages/Courses";
 import Layout from './components/Layout';
 import About from "./pages/About";
 import Notice from "./pages/Notice";
-import FacebookPosts from "./pages/FacebookPosts";
+// import FacebookPosts from "./pages/FacebookPosts";
 
 const queryClient = new QueryClient();
 
@@ -28,7 +28,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
             <Route path="/branches" element={<Branches />} />
             <Route path="/courses" element={<Courses />} />
-            <Route path="/facebook-posts" element={<FacebookPosts />} />
+            {/* <Route path="/facebook-posts" element={<FacebookPosts />} /> */}
           </Routes>
         </Layout>
       </BrowserRouter>
