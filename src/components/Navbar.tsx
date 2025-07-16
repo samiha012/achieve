@@ -20,7 +20,7 @@ const Navbar = () => {
             <Link to="/features" className="text-gray-700 hover:text-blue-600 transition-colors">Features</Link>
             <Link to="/branches" className="text-gray-700 hover:text-blue-600 transition-colors">Branches</Link>
             <Link to="/courses" className="text-gray-700 hover:text-blue-600 transition-colors">Visit Courses</Link>
-            <Link to="/facebook-posts" className="text-gray-700 hover:text-blue-600 transition-colors">Latest News</Link>
+            {/* <Link to="/facebook-posts" className="text-gray-700 hover:text-blue-600 transition-colors">Latest News</Link> */}
             <Link to="/notice" className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors"><Megaphone className="h-6 w-6 text-blue-600" /> <span className="font-semibold">Notice</span></Link>
           </div>
 
@@ -42,7 +42,7 @@ const Navbar = () => {
               <Link to="/" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Home</Link>
               <Link to="/features" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Features</Link>
               <Link to="/branches" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Branches</Link>
-              <Link to="/facebook-posts" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Latest News</Link>
+              {/* <Link to="/facebook-posts" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Latest News</Link> */}
               <Link to="/notice" className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"><Megaphone className="h-6 w-6 text-blue-600" /> <span className="font-semibold">Notice</span></Link>
               <div className="px-3 py-2">
                 <Button className="w-full bg-blue-600 hover:bg-blue-700">
