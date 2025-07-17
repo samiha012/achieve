@@ -14,8 +14,9 @@ exports.handler = async function (event, context) {
     };
   }
 
-  const path = event.path.replace("/.netlify/functions/proxy", "");
+  const path = event.path.replace("/.netlify/functions/proxy", "/api");
   const url = `http://159.223.78.83:4001${path}`;
+  console.log("Proxying to:", url);
 
   // Filter out problematic headers
   const { host, connection, ...filteredHeaders } = event.headers;
