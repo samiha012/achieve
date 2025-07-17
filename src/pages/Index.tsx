@@ -28,7 +28,8 @@ const Index = () => {
     useEffect(() => {
       const fetchFeatured = async () => {
         try {
-          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/courses/featured`);
+          const baseURL = import.meta.env.VITE_API_URL || '';
+          const res = await axios.get(`${baseURL}/api/courses/featured`);
           setPopularCourses(res.data);
         } catch (error) {
           console.error('Error fetching featured courses:', error);
@@ -110,7 +111,7 @@ const Index = () => {
                     className="border border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white px-7 h-12 text-base font-semibold rounded-lg shadow-md transition-all duration-200"
                   >
                     Visit On-going Courses
-                     <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
               </div>

@@ -12,7 +12,7 @@ const features = [
     title: "See all your answers",
     description:
       "Review all your answers in one place. You can see your answers, correct answers, and the solutions for every question.",
-    image: "../../public/correct.png",
+    image: "../../correct.png",
   },
   {
     title: "Growth charts",
@@ -24,7 +24,7 @@ const features = [
     title: "Exam Results",
     description:
       "See all the exam results in one place. You can view your exam results, see branch merit and central merit position of yourself, and compare your performance with others.",
-    image: "../../public/merit.png",
+    image: "../../merit.png",
   },
   {
     title: "Solve class for every exam",

@@ -9,7 +9,8 @@ const Testimonials = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/`);
+        const baseURL = import.meta.env.VITE_API_URL || '';
+        const response = await fetch(`${baseURL}/api/testimonials/`);
         const data = await response.json();
         setTestimonials(data);
       } catch (error) {
