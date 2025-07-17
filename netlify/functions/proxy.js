@@ -1,4 +1,5 @@
-const fetch = require('node-fetch');
+// Use dynamic import for node-fetch to support ESM in CommonJS
+const fetch = (...args) => import('node-fetch').then(mod => mod.default(...args));
 
 exports.handler = async function (event, context) {
   // Handle CORS preflight request
