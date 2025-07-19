@@ -69,7 +69,7 @@ const Index = () => {
     return { count, elementRef };
   };
 
-  const studentsCounter = useCounter(12000);
+  const studentsCounter = useCounter(20000);
   const coursesCounter = useCounter(12);
   const branchesCounter = useCounter(15);
 
@@ -77,7 +77,7 @@ const Index = () => {
     <div className="min-h-screen bg-white">
 
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-hidden">
+      <section id="home" className=" relative min-h-screen flex items-center bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-200 opacity-30 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-0 w-80 h-80 bg-purple-200 opacity-20 rounded-full blur-2xl" />

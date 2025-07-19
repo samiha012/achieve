@@ -30,7 +30,7 @@ exports.handler = async function (event, context) {
     url = urlObj.toString();
   } else {
     // fallback to your old backend for other endpoints
-    url = `http://159.223.78.83:4001/api${path}`;
+    url = `http://159.223.78.83:4001/${path}`;
   }
 
   console.log("Proxying to:", url);
