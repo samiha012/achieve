@@ -1,5 +1,4 @@
 const fetch = require("node-fetch");
-require('dotenv').config();
 
 exports.handler = async function (event, context) {
   // Handle CORS preflight request
