@@ -59,7 +59,7 @@ const Branches = () => {
       formData.append('search[regex]', 'false');
 
       const response = await fetch(
-        `${import.meta.env.VITE_CRM_URL}/branch/all?uid=${import.meta.env.VITE_UID}`,
+        '/.netlify/functions/proxy/branch/all',
         {
           method: 'POST',
           headers: {

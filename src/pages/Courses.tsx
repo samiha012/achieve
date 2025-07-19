@@ -14,7 +14,7 @@ const Courses = () => {
     setLoading(true);
     setError(null);
     
-    fetch(`${import.meta.env.VITE_CRM_URL}/product/achieve-courses?uid=${import.meta.env.VITE_UID}`)
+    fetch('/.netlify/functions/proxy/product/achieve-courses')
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch courses');
         return res.json();

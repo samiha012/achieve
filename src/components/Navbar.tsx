@@ -39,14 +39,14 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
-              <Link to="/" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Home</Link>
-              <Link to="/features" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Features</Link>
-              <Link to="/branches" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Branches</Link>
+              <Link to="/" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+              <Link to="/features" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Features</Link>
+              <Link to="/branches" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Branches</Link>
               {/* <Link to="/facebook-posts" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Latest News</Link> */}
-              <Link to="/notice" className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"><Megaphone className="h-6 w-6 text-blue-600" /> <span className="font-semibold">Notice</span></Link>
+              <Link to="/notice" className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={() => setIsMobileMenuOpen(false)}><Megaphone className="h-6 w-6 text-blue-600" /> <span className="font-semibold">Notice</span></Link>
               <div className="px-3 py-2">
                 <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                  <Link to="/courses" target='_blank'> Courses</Link>
+                  <Link to="/courses" target='_blank' onClick={() => setIsMobileMenuOpen(false)}> Courses</Link>
                 </Button>
               </div>
             </div>

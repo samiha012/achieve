@@ -1,4 +1,5 @@
 const fetch = require("node-fetch");
+require('dotenv').config();
 
 exports.handler = async function (event, context) {
   // Handle CORS preflight request
@@ -14,8 +15,25 @@ exports.handler = async function (event, context) {
     };
   }
 
-  const path = event.path.replace("/.netlify/functions/proxy", "/api");
-  const url = `http://159.223.78.83:4001${path}`;
+  // Get UID from environment variable
+  const CRM_UID = process.env.CRM_UID;
+  const path = event.path.replace("/.netlify/functions/proxy", "");
+
+  let url;
+  // Direct to crm.apars.shop for these endpoints
+  if (path.startsWith("/branch/all")) {
+    const urlObj = new URL(`https://crm.apars.shop${path}`);
+    urlObj.searchParams.set("uid", CRM_UID);
+    url = urlObj.toString();
+  } else if (path.startsWith("/product/achieve-courses")) {
+    const urlObj = new URL(`https://crm.apars.shop${path}`);
+    urlObj.searchParams.set("uid", CRM_UID);
+    url = urlObj.toString();
+  } else {
+    // fallback to your old backend for other endpoints
+    url = `http://159.223.78.83:4001/api${path}`;
+  }
+
   console.log("Proxying to:", url);
 
   // Filter out problematic headers
