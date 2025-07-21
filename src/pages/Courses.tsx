@@ -50,7 +50,7 @@ const Courses = () => {
   }, [search, selectedCategory, coursesData]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="">
       {/* Header */}
       <div className="bg-gray-100 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,8 +70,8 @@ const Courses = () => {
       {/* Main layout */}
       <div className="flex min-h-[70vh]">
         {/* Sidebar (desktop only) */}
-        <aside
-          className="w-80 bg-white/90 pt-6 pb-8 px-8 border-r border-gray-100 flex-col gap-4 shadow-md hidden md:flex"
+        <aside 
+          className="w-80 bg-white/90 pt-6 pb-8 px-8 border-r border-gray-100 flex-col gap-4 shadow-md rounded-xl hidden md:flex"
         >
           {/* Filter header */}
           <div className="mb-2">

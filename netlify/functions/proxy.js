@@ -19,7 +19,7 @@ exports.handler = async function (event, context) {
   const path = event.path.replace("/.netlify/functions/proxy", "");
 
   let url;
-  // Direct to crm.apars.shop for these endpoints
+  // Only proxy routes that require a UID
   if (path.startsWith("/branch/all")) {
     const urlObj = new URL(`https://crm.apars.shop${path}`);
     urlObj.searchParams.set("uid", CRM_UID);
@@ -29,8 +29,16 @@ exports.handler = async function (event, context) {
     urlObj.searchParams.set("uid", CRM_UID);
     url = urlObj.toString();
   } else {
-    // fallback to your old backend for other endpoints
-    url = `http://159.223.78.83:4001/${path}`;
+    // For any other route, return a 404 Not Found error
+    return {
+      statusCode: 404,
+      headers: {
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Content-Type, Authorization",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+      },
+      body: JSON.stringify({ error: "Route not proxied" }),
+    };
   }
 
   console.log("Proxying to:", url);

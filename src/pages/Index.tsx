@@ -455,44 +455,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-100 text-white py-12 mt-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center sm:text-left">
-            <div>
-              <div className="text-2xl font-bold text-blue-500 mb-4">Achieve</div>
-              <p className="text-gray-400">
-                A sister concern of ACS for offline exam centres.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-gray-700">Company</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#about" className="hover:text-blue-600 transition-colors">About Us</a></li>
-                <li><a href="#contact" className="hover:text-blue-600 transition-colors">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-gray-700">Connect</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <a href="https://www.facebook.com/ACSAchieveCentre" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">Facebook</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-gray-700">Location</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>Bangladesh</li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-300 mt-8 pt-8 text-center text-gray-400 text-sm">
-            <p>&copy; 2025 Achieve. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
