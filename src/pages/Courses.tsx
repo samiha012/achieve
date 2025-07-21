@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ArrowBigLeft, Book, BookOpenCheck } from 'lucide-react';
+import { ArrowBigLeft, Book, BookOpenCheck, Search, Plus, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -13,14 +13,16 @@ const Courses = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    
+
     fetch('/.netlify/functions/proxy/product/achieve-courses')
+      //fetch(`${import.meta.env.VITE_CRM_URL}/product/achieve-courses?uid=${import.meta.env.VITE_UID}`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch courses');
         return res.json();
       })
       .then((data) => {
-        setCoursesData(data.courses || []);
+        const activeCourses = (data.courses || []).filter(course => course.status !== 'Disable');
+        setCoursesData(activeCourses);
         setLoading(false);
       })
       .catch((err) => {
@@ -58,75 +60,63 @@ const Courses = () => {
                 <BookOpenCheck className="h-6 w-6" />
               </div>
             </div>
-
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800">Courses</h1>
-
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
               Find the course that's <span className="text-blue-600 font-semibold">right for you</span> so that you feel confiident in sitting for admission tests or academic exams.
             </p>
           </div>
         </div>
       </div>
-      {/* Mobile search/filter bar */}
-      <div className="md:hidden px-4 pt-6 flex flex-col gap-4 bg-white/90 border-b border-gray-100 shadow-sm">
-        <input
-          type="text"
-          placeholder="Search courses..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-base shadow-sm"
-        />
-        <div>
-          <label className="font-semibold mb-2 block text-gray-700 text-lg">
-            Filter by Category
-          </label>
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 text-base shadow-sm bg-white"
-          >
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
       {/* Main layout */}
       <div className="flex min-h-[70vh]">
         {/* Sidebar (desktop only) */}
         <aside
-          className="w-80 bg-white/90 p-8 border-r border-gray-100 flex-col gap-8 shadow-md hidden md:flex"
+          className="w-80 bg-white/90 pt-6 pb-8 px-8 border-r border-gray-100 flex-col gap-4 shadow-md hidden md:flex"
         >
-          <div>
-            <input
-              type="text"
-              placeholder="Search courses..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-base shadow-sm"
-            />
+          {/* Filter header */}
+          <div className="mb-2">
+            <span className="font-semibold text-gray-700 text-lg">Filter courses</span>
+            <hr className="mt-2 mb-2 border-gray-200" />
           </div>
-          <div>
-            <label className="font-semibold mb-2 block text-gray-700 text-lg">
-              Filter by Category
-            </label>
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 text-base shadow-sm bg-white"
-            >
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
+          {/* Filter pills */}
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat) => {
+              const isSelected = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`flex items-center gap-1 px-4 py-2 rounded-full border transition text-sm font-medium
+                    ${isSelected ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-blue-50'}
+                  `}
+                >
+                  {isSelected ? (
+                    <Check className="h-4 w-4 mr-1" />
+                  ) : (
+                    <Plus className="h-4 w-4 mr-1" />
+                  )}
                   {cat}
-                </option>
-              ))}
-            </select>
+                </button>
+              );
+            })}
           </div>
         </aside>
         {/* Main content */}
         <main className="flex-1 p-8 flex flex-col gap-6">
+          {/* Search bar inside main content */}
+          <div className="mb-6">
+            <div className="flex items-center bg-white border border-gray-200 rounded-full shadow-sm px-2 py-1 w-full">
+              <Search className="h-5 w-5 text-gray-400 ml-2" />
+              <input
+                type="text"
+                placeholder="Search courses..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="flex-1 px-3 py-2 bg-transparent focus:outline-none text-base"
+              />
+            </div>
+          </div>
           {loading ? (
             <div className="text-gray-500 text-center mt-32 text-xl animate-pulse">Loading courses...</div>
           ) : error ? (
@@ -136,51 +126,49 @@ const Courses = () => {
               No courses found.
             </div>
           ) : (
-            <div className="flex flex-col gap-8 items-center w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
               {filteredCourses.map((course) => (
                 <div
                   key={course._id}
-                  className="w-full max-w-7xl mx-auto flex flex-col sm:flex-row bg-white/90 border border-blue-100 rounded-2xl shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-200 overflow-hidden"
+                  className="flex flex-col bg-white/90 border border-blue-100 rounded-2xl shadow-md hover:shadow-xl transition-all duration-200 overflow-hidden"
                   style={{ minHeight: 150 }}
                 >
-                  {/* Left: Image */}
-                  <div className="relative w-full sm:w-80 aspect-video sm:aspect-auto sm:h-full flex-shrink-0 overflow-hidden rounded-t-2xl sm:rounded-l-2xl sm:rounded-tr-none bg-gray-100">
+                  {/* Image */}
+                  <div className="relative w-full aspect-video bg-gray-100">
                     <img
                       src={course.ProductImage}
                       alt={course.productFullName}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                   </div>
-
-                  {/* Right: Content */}
-                  <div className="flex-1 px-6 py-4 min-w-0">
-                    {/* Title */}
-                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800 line-clamp-2 mb-2 hover:text-blue-700 transition-colors">
+                  {/* Content */}
+                  <div className="flex-1 px-6 py-4 min-w-0 flex flex-col">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800 line-clamp-2 mb-2 transition-colors">
                       {course.productFullName}
                     </h2>
-
                     <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded-full text-xs font-medium">
+                      <span className="bg-gray-50 text-gray-600 border border-gray-200 px-2 py-0.5 rounded-full text-xs font-medium">
                         {course.Category}
                       </span>
+                      <span className="bg-gray-50 text-gray-600 border border-gray-200 px-2 py-0.5 rounded-full text-xs font-medium">
+                        {course.SubCategory}
+                      </span>
                     </div>
-
-                    <div className="text-blue-600 font-bold text-lg tracking-tight mb-3">
-                      {course.currency_amount} BDT
+                    <div className="flex items-center justify-between mt-auto">
+                      <span className="text-green-500 font-bold text-lg tracking-tight">
+                        {course.currency_amount} BDT
+                      </span>
+                      <a
+                        href={course.Permalink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-xl font-medium text-sm shadow-sm transition-all"
+                      >
+                        View Course
+                      </a>
                     </div>
-
-                    <a
-                      href={course.Permalink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block text-white bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-full font-medium text-sm shadow-sm transition-all"
-                    >
-                      View Course
-                    </a>
                   </div>
                 </div>
-
-
               ))}
             </div>
           )}
