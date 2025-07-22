@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Youtube } from "lucide-react";
+import { FaInstagram } from 'react-icons/fa';
+import { FiFacebook, FiYoutube } from "react-icons/fi";
 
 export default function Footer() {
   return (
@@ -27,7 +28,7 @@ export default function Footer() {
               </h3>
               <ul className="space-y-2 text-gray-600">
                 <li><Link to="/" className="hover:text-blue-600 transition-colors">Home</Link></li>
-                <li><Link to="/about" className="hover:text-blue-600 transition-colors">About</Link></li>
+                <li><Link to="/features" className="hover:text-blue-600 transition-colors">Features</Link></li>
                 <li><Link to="/courses" className="hover:text-blue-600 transition-colors">Courses</Link></li>
                 <li><Link to="/branches" className="hover:text-blue-600 transition-colors">Branches</Link></li>
               </ul>
@@ -41,7 +42,7 @@ export default function Footer() {
               <ul className="space-y-2 text-gray-600">
                 <li><a href="https://asgshop.com.bd" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">ASG Shop</a></li>
                 <li><a href="https://aparsclassroom.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">Apars Classroom</a></li>
-                <li><a href="https://aparsclassroom.com/courses" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">Online Academic Courses</a></li>
+                <li><a href="https://aparsclassroom.com/shop" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">Online Academic Courses</a></li>
               </ul>
             </div>
 
@@ -51,14 +52,14 @@ export default function Footer() {
                 Follow Us
               </h3>
               <div className="flex gap-4">
-                <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-blue-600 transition-colors">
-                  <Facebook className="h-6 w-6" />
+                <a href="https://www.facebook.com/ACSAchieveCentre" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-blue-600 transition-colors">
+                  <FiFacebook className="h-6 w-6" />
                 </a>
-                <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-500 transition-colors">
-                  <Instagram className="h-6 w-6" />
+                <a href="https://www.instagram.com/aparsclassroom" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-500 transition-colors">
+                  <FaInstagram className="h-6 w-6" />
                 </a>
-                <a href="https://youtube.com/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-red-600 transition-colors">
-                  <Youtube className="h-6 w-6" />
+                <a href="https://youtube.com/aparsclassroom" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-red-600 transition-colors">
+                  <FiYoutube className="h-6 w-6" />
                 </a>
               </div>
             </div>
