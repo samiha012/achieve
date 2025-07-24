@@ -11,6 +11,20 @@ import Testimonials from '@/components/Testimonial';
 const Index = () => {
   const [popularCourses, setPopularCourses] = useState([]);
 
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      try {
+        const baseURL = import.meta.env.VITE_API_URL || '';
+        const res = await axios.get(`${baseURL}/api/courses/featured`);
+        setPopularCourses(res.data);
+      } catch (error) {
+        console.error('Error fetching featured courses:', error);
+      }
+    };
+
+    fetchFeatured();
+  }, []);
+
   // const handleSearch = (e: React.FormEvent) => {
   //   e.preventDefault();
   //   if (searchQuery.trim()) {
@@ -24,20 +38,6 @@ const Index = () => {
     const [count, setCount] = useState(0);
     const [hasStarted, setHasStarted] = useState(false);
     const elementRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-      const fetchFeatured = async () => {
-        try {
-          const baseURL = import.meta.env.VITE_API_URL || '';
-          const res = await axios.get(`${baseURL}/api/courses/featured`);
-          setPopularCourses(res.data);
-        } catch (error) {
-          console.error('Error fetching featured courses:', error);
-        }
-      };
-
-      fetchFeatured();
-    }, []);
 
     useEffect(() => {
       const observer = new IntersectionObserver(

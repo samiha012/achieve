@@ -1,27 +1,81 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Megaphone } from 'lucide-react';
+import { Menu, X, Megaphone, Shield, Users, Settings, BookOpen, Facebook, MessageSquare } from 'lucide-react';
 import { Button } from './ui/button';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
+
+  // Check if user is admin (user exists means they're authenticated admin)
+  const isAdmin = isAuthenticated && user;
+
+  // Regular user navigation links
+  const regularLinks = [
+    { to: "/", label: "Home" },
+    { to: "/features", label: "Features" },
+    { to: "/branches", label: "Branches" },
+    { to: "/courses", label: "Visit Courses" },
+    { to: "/notice", label: "Notice", icon: Megaphone }
+  ];
+
+  // Admin navigation links based on your actual admin routes
+  const adminLinks = [
+    { to: "/admin/testimonials", label: "Testimonials", icon: MessageSquare },
+    { to: "/admin/notice", label: "Notice", icon: Megaphone },
+    { to: "/admin/courses", label: "Courses", icon: BookOpen },
+    { to: "/admin/fbpost", label: "FB Posts", icon: Facebook },
+    { to: "/admin/fb", label: "Facebook", icon: Facebook }
+  ];
+
+  // Choose which links to display based on admin status
+  const navigationLinks = isAdmin ? adminLinks : regularLinks;
 
   return (
     <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center h-10">
-             <img src="https://i.postimg.cc/FKF7XF9W/441544705-122103148808330502-3624163372952513294-n-1.jpg" alt="" className="h-full max-h-full w-auto object-contain" />     
+            <img src="https://i.postimg.cc/FKF7XF9W/441544705-122103148808330502-3624163372952513294-n-1.jpg" alt="" className="h-full max-h-full w-auto object-contain" />
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">Home</Link>
-            <Link to="/features" className="text-gray-700 hover:text-blue-600 transition-colors">Features</Link>
-            <Link to="/branches" className="text-gray-700 hover:text-blue-600 transition-colors">Branches</Link>
-            <Link to="/courses" className="text-gray-700 hover:text-blue-600 transition-colors">Visit Courses</Link>
-            {/* <Link to="/facebook-posts" className="text-gray-700 hover:text-blue-600 transition-colors">Latest News</Link> */}
-            <Link to="/notice" className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors"><Megaphone className="h-6 w-6 text-blue-600" /> <span className="font-semibold">Notice</span></Link>
+            {navigationLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`flex items-center gap-2 transition-colors ${isAdmin
+                  ? 'text-gray-700 hover:text-red-600'
+                  : 'text-gray-700 hover:text-blue-600'
+                  }`}
+              >
+                {link.icon && (
+                  <link.icon className={`h-4 w-4 ${isAdmin ? 'text-red-600' : 'text-blue-600'}`} />
+                )}
+                <span className={link.label === "Notice" ? "font-semibold" : ""}>
+                  {link.label}
+                </span>
+              </Link>
+            ))}
+
+            {/* Admin indicator badge */}
+            {isAdmin && (
+              <>
+                <div className="flex items-center gap-2 px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">
+                  <Shield className="h-4 w-4" />
+                  Admin
+                </div>
+                <Button
+                  onClick={logout}
+                  variant="outline"
+                  className="border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300"
+                >
+                  Logout
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -39,16 +93,43 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
-              <Link to="/" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-              <Link to="/features" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Features</Link>
-              <Link to="/branches" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Branches</Link>
-              {/* <Link to="/facebook-posts" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Latest News</Link> */}
-              <Link to="/notice" className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={() => setIsMobileMenuOpen(false)}><Megaphone className="h-6 w-6 text-blue-600" /> <span className="font-semibold">Notice</span></Link>
-              <div className="px-3 py-2">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                  <Link to="/courses" target='_blank' onClick={() => setIsMobileMenuOpen(false)}> Courses</Link>
-                </Button>
-              </div>
+              {/* Admin indicator for mobile */}
+              {isAdmin && (
+                <div className="flex items-center gap-2 px-3 py-2 bg-red-100 text-red-700 rounded-lg text-sm font-medium mx-2 mb-2">
+                  <Shield className="h-4 w-4" />
+                  Admin Mode
+                </div>
+              )}
+
+              {navigationLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className={`flex items-center gap-2 px-3 py-2 transition-colors ${isAdmin
+                    ? 'text-gray-700 hover:text-red-600'
+                    : 'text-gray-700 hover:text-blue-600'
+                    }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.icon && (
+                    <link.icon className={`h-4 w-4 ${isAdmin ? 'text-red-600' : 'text-blue-600'}`} />
+                  )}
+                  <span className={link.label === "Notice" ? "font-semibold" : ""}>
+                    {link.label}
+                  </span>
+                </Link>
+              ))}
+
+              {/* Show courses button for regular users in mobile */}
+              {!isAdmin && (
+                <div className="px-3 py-2">
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                    <Link to="/courses" target='_blank' onClick={() => setIsMobileMenuOpen(false)}>
+                      Courses
+                    </Link>
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -57,4 +138,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;

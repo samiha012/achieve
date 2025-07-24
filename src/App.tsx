@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Branches from "./pages/Branches";
@@ -11,6 +11,29 @@ import Layout from './components/Layout';
 import About from "./pages/About";
 import Notice from "./pages/Notice";
 // import FacebookPosts from "./pages/FacebookPosts";
+
+//admin routes
+import AdminTestimonials from "./pages/AdminTestimonials";
+import AdminCourses from "./pages/AdminCourses";
+import Login from "./pages/Login";
+import { useAuth } from "./context/AuthContext";
+import AdminNotice from "./pages/AdminNotice";
+import FBpost from "./pages/AdminFBpost";
+import FacebookPostPage from "./pages/AdminFacebookPostPage";
+
+function RequireAuth({ children }) {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  return children;
+}
 
 const queryClient = new QueryClient();
 
@@ -25,9 +48,15 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/features" element={<About />} />
             <Route path="/notice" element={<Notice />} />
-            <Route path="*" element={<NotFound />} />
             <Route path="/branches" element={<Branches />} />
             <Route path="/courses" element={<Courses />} />
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin/testimonials" element={<RequireAuth><AdminTestimonials /></RequireAuth>} />
+            <Route path="/admin/notice" element={<RequireAuth><AdminNotice /></RequireAuth>} />
+            <Route path="/admin/courses" element={<RequireAuth><AdminCourses /></RequireAuth>} />
+            <Route path="/admin/fbpost" element={<RequireAuth><FBpost /></RequireAuth>} />
+            <Route path="/admin/fb" element={<RequireAuth><FacebookPostPage /></RequireAuth>} />
+            <Route path="*" element={<NotFound />} />
             {/* <Route path="/facebook-posts" element={<FacebookPosts />} /> */}
           </Routes>
         </Layout>
