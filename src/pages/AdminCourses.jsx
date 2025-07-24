@@ -33,7 +33,8 @@ const FeaturedCoursesAdmin = () => {
       await axios.post(`${BACKEND_URL}/toggle-feature`, { course }, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+        },
+         credentials: "include",
       });
       setFeaturedList(prev => {
         const exists = prev.some(c => c.productId === course.productId);

@@ -54,11 +54,12 @@ const NoticeAdmin = () => {
       if (editId) {
         await axios.put(`${import.meta.env.VITE_API_URL}/api/notices/edit/${editId}`, payload, {
           headers: { Authorization: `Bearer ${token}` },
+           credentials: "include",
         });
         setToast({ message: 'Notice updated!', type: 'success' });
       } else {
         await axios.post(`${import.meta.env.VITE_API_URL}/api/notices/add`, payload, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` },  credentials: "include",
         });
         setToast({ message: 'Notice added!', type: 'success' });
       }
@@ -84,7 +85,7 @@ const NoticeAdmin = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.delete(`${import.meta.env.VITE_API_URL}/api/notices/delete/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` },  credentials: "include",
       });
       fetchNotices();
     } catch (err) {
