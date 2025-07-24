@@ -31,7 +31,7 @@ const FeaturedCoursesAdmin = () => {
   const handleToggle = async (course) => {
     try {
       await axios.post(`${BACKEND_URL}/toggle-feature`, { course }, {
-         credentials: "include",
+         withCredentials: true,
       });
       setFeaturedList(prev => {
         const exists = prev.some(c => c.productId === course.productId);
