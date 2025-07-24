@@ -39,15 +39,25 @@ export function AuthProvider({ children }) {
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || "Login failed");
 
-    setUser(data.admin); // From backend response
+    setUser(data.admin);
   };
 
   const logout = async () => {
-    await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
-    setUser(null);
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
+        method: "POST",
+        credentials: "include", 
+      });
+
+      if (res.ok) {
+        setUser(null);
+        navigate("/admin/login");
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
   };
 
   const isAuthenticated = !!user;
