@@ -114,7 +114,7 @@ const Navbar = () => {
                   {link.icon && (
                     <link.icon className={`h-4 w-4 ${isAdmin ? 'text-red-600' : 'text-blue-600'}`} />
                   )}
-                  <span className={link.label === "Notice" ? "font-semibold" : ""}>
+                  <span>
                     {link.label}
                   </span>
                 </Link>

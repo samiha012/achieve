@@ -49,7 +49,7 @@ const FeaturedCoursesAdmin = () => {
   if (loading) return <div className="p-4">Loading...</div>;
 
   return (
-    <div className="w-full rounded-3xl shadow-2xl p-8 md:p-12 relative overflow-hidden">
+    <div className="w-full rounded-3xl p-8 md:p-12 relative overflow-hidden">
 
       {/* Header */}
       <div className="relative z-10 mb-10">
