@@ -5,8 +5,39 @@ import { HiBellAlert } from "react-icons/hi2";
 const SIDEBAR_OPTIONS = [
   { key: "add", label: "Add Testimonial", icon: HiPlus },
   { key: "show", label: "Show All Testimonials", icon: HiViewList },
-  { key: "delete", label: "Delete Testimonial", icon: HiTrash }, // Placeholder for future feedback functionality
+  { key: "delete", label: "Delete Testimonial", icon: HiTrash },
 ];
+
+// Loader Component
+function Loader({ size = "md", color = "blue" }) {
+  const sizeClasses = {
+    sm: "w-4 h-4",
+    md: "w-8 h-8",
+    lg: "w-12 h-12"
+  };
+  
+  const colorClasses = {
+    blue: "border-blue-500",
+    white: "border-white",
+    gray: "border-gray-400"
+  };
+
+  return (
+    <div className={`${sizeClasses[size]} ${colorClasses[color]} border-2 border-t-transparent rounded-full animate-spin`}></div>
+  );
+}
+
+// Full page loader overlay
+function LoaderOverlay({ message = "Loading..." }) {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-6 flex flex-col items-center gap-4 shadow-xl">
+        <Loader size="lg" />
+        <p className="text-gray-700 font-medium">{message}</p>
+      </div>
+    </div>
+  );
+}
 
 function getInitials(name) {
   return name
@@ -23,12 +54,14 @@ function AdminTestimonials() {
   const [sidebarOption, setSidebarOption] = useState("add");
   const [toast, setToast] = useState({ message: "", type: "success" });
   const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [deletingIndex, setDeletingIndex] = useState(null);
   const [error, setError] = useState("");
 
   // Fetch all testimonials
   useEffect(() => {
     fetchTestimonials();
-  }, []);;
+  }, []);
 
   const fetchTestimonials = async () => {
     setLoading(true);
@@ -58,6 +91,8 @@ function AdminTestimonials() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
+    
     if (editingIndex !== null) {
       // Edit
       try {
@@ -98,6 +133,7 @@ function AdminTestimonials() {
       }
     }
     setForm({ name: "", position: "", text: "" });
+    setSubmitting(false);
   };
 
   const handleEdit = (idx) => {
@@ -111,6 +147,7 @@ function AdminTestimonials() {
   };
 
   const handleDelete = async (idx) => {
+    setDeletingIndex(idx);
     try {
       const id = testimonials[idx]._id;
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/testimonials/delete/${id}`, {
@@ -122,7 +159,10 @@ function AdminTestimonials() {
       showToast("Testimonial deleted!");
     } catch {
       showToast("Failed to delete testimonial", "error");
+    } finally {
+      setDeletingIndex(null);
     }
+    
     if (editingIndex === idx) {
       setForm({ name: "", position: "", text: "" });
       setEditingIndex(null);
@@ -131,6 +171,9 @@ function AdminTestimonials() {
 
   return (
     <div className="w-full bg-slate-100 flex justify-center items-start py-4 md:py-10">
+      {/* Loading overlay for initial page load */}
+      {loading && <LoaderOverlay message="Loading testimonials..." />}
+      
       <div className="flex flex-col lg:flex-row w-full max-w-7xl bg-white rounded-none md:rounded-2xl overflow-hidden relative mx-2 md:mx-0">
         {toast.message && (
           <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded shadow-lg animate-fade-in-out text-white ${toast.type === 'error' ? 'bg-red-600' : 'bg-green-500'}`}>
@@ -163,8 +206,7 @@ function AdminTestimonials() {
 
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-6 lg:p-10 bg-slate-50">
-          {loading && <div className="text-center text-blue-500">Loading testimonials...</div>}
-          {error && <div className="text-center text-red-600">{error}</div>}
+          {error && <div className="text-center text-red-600 mb-4">{error}</div>}
 
           {/* Add/Edit Form */}
           {sidebarOption === "add" && (
@@ -172,7 +214,7 @@ function AdminTestimonials() {
               <h2 className="text-blue-500 mb-4 md:mb-6 font-bold text-xl md:text-2xl">
                 {editingIndex !== null ? "Edit Testimonial" : "Add Testimonial"}
               </h2>
-              <form onSubmit={handleSubmit}>
+              <div onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-4 md:gap-5">
                   <input
                     name="name"
@@ -180,7 +222,8 @@ function AdminTestimonials() {
                     value={form.name}
                     onChange={handleChange}
                     required
-                    className="p-3 rounded-md border border-slate-300 text-base"
+                    disabled={submitting}
+                    className="p-3 rounded-md border border-slate-300 text-base disabled:bg-gray-100 disabled:cursor-not-allowed"
                   />
                   <input
                     name="position"
@@ -188,7 +231,8 @@ function AdminTestimonials() {
                     value={form.position}
                     onChange={handleChange}
                     required
-                    className="p-3 rounded-md border border-slate-300 text-base"
+                    disabled={submitting}
+                    className="p-3 rounded-md border border-slate-300 text-base disabled:bg-gray-100 disabled:cursor-not-allowed"
                   />
                   <textarea
                     name="text"
@@ -197,27 +241,36 @@ function AdminTestimonials() {
                     onChange={handleChange}
                     required
                     rows={4}
-                    className="p-3 rounded-md border border-slate-300 text-base resize-vertical"
+                    disabled={submitting}
+                    className="p-3 rounded-md border border-slate-300 text-base resize-vertical disabled:bg-gray-100 disabled:cursor-not-allowed"
                   />
                   <div className="flex flex-col sm:flex-row gap-3 mt-2">
                     <button
-                      type="submit"
-                      className="flex-1 bg-blue-500 text-white py-2 rounded-md font-semibold hover:bg-blue-800 transition"
+                      onClick={handleSubmit}
+                      disabled={submitting}
+                      className="flex-1 bg-blue-500 text-white py-2 rounded-md font-semibold hover:bg-blue-800 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                      {editingIndex !== null ? "Update" : "Add"}
+                      {submitting ? (
+                        <>
+                          <Loader size="sm" color="white" />
+                          {editingIndex !== null ? "Updating..." : "Adding..."}
+                        </>
+                      ) : (
+                        editingIndex !== null ? "Update" : "Add"
+                      )}
                     </button>
                     {editingIndex !== null && (
                       <button
-                        type="button"
                         onClick={() => { setForm({ name: "", position: "", text: "" }); setEditingIndex(null); }}
-                        className="flex-1 bg-slate-200 text-blue-500 border-none py-2 rounded-md font-semibold hover:bg-slate-300 transition"
+                        disabled={submitting}
+                        className="flex-1 bg-slate-200 text-blue-500 border-none py-2 rounded-md font-semibold hover:bg-slate-300 transition disabled:bg-gray-200 disabled:cursor-not-allowed"
                       >
                         Cancel
                       </button>
                     )}
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           )}
 
@@ -227,7 +280,9 @@ function AdminTestimonials() {
               <h2 className="text-blue-500 mb-4 md:mb-6 font-bold text-xl md:text-2xl">All Testimonials</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {testimonials.length === 0 ? (
-                  <div className="text-slate-400 text-lg mx-auto col-span-full">No testimonials yet.</div>
+                  <div className="text-slate-400 text-lg mx-auto col-span-full flex flex-col items-center gap-4">
+                    <p>No testimonials yet.</p>
+                  </div>
                 ) : (
                   testimonials.map((t, idx) => (
                     <div key={t._id} className="bg-white rounded-xl shadow p-4 md:p-6 flex flex-col items-center border border-blue-100 transition-shadow">
@@ -240,15 +295,24 @@ function AdminTestimonials() {
                       <div className="flex flex-col sm:flex-row gap-2 w-full">
                         <button
                           onClick={() => handleEdit(idx)}
-                          className="flex-1 bg-blue-100 text-blue-700 border-none px-4 py-1.5 rounded-md font-medium text-sm md:text-base hover:bg-blue-200 transition"
+                          disabled={deletingIndex === idx}
+                          className="flex-1 bg-blue-100 text-blue-700 border-none px-4 py-1.5 rounded-md font-medium text-sm md:text-base hover:bg-blue-200 transition disabled:bg-gray-100 disabled:cursor-not-allowed"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDelete(idx)}
-                          className="flex-1 bg-red-600 text-white border-none px-4 py-1.5 rounded-md font-medium text-sm md:text-base hover:bg-red-700 transition"
+                          disabled={deletingIndex === idx}
+                          className="flex-1 bg-red-600 text-white border-none px-4 py-1.5 rounded-md font-medium text-sm md:text-base hover:bg-red-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
-                          Delete
+                          {deletingIndex === idx ? (
+                            <>
+                              <Loader size="sm" color="white" />
+                              Deleting...
+                            </>
+                          ) : (
+                            "Delete"
+                          )}
                         </button>
                       </div>
                     </div>
@@ -276,9 +340,17 @@ function AdminTestimonials() {
                       <div className="text-sm md:text-base text-slate-700 mb-4 text-center line-clamp-3">&ldquo;{t.text}&rdquo;</div>
                       <button
                         onClick={() => handleDelete(idx)}
-                        className="w-full bg-red-600 text-white border-none px-6 py-2 rounded-md font-medium text-sm md:text-base hover:bg-red-700 transition"
+                        disabled={deletingIndex === idx}
+                        className="w-full bg-red-600 text-white border-none px-6 py-2 rounded-md font-medium text-sm md:text-base hover:bg-red-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                       >
-                        Delete
+                        {deletingIndex === idx ? (
+                          <>
+                            <Loader size="sm" color="white" />
+                            Deleting...
+                          </>
+                        ) : (
+                          "Delete"
+                        )}
                       </button>
                     </div>
                   ))
@@ -292,4 +364,4 @@ function AdminTestimonials() {
   );
 }
 
-export default AdminTestimonials; 
+export default AdminTestimonials;
