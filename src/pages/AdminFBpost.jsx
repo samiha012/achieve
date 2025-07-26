@@ -1,6 +1,8 @@
 // FBPostAdminPanel.tsx
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import FacebookPost from "../components/FacebookPost";
 
 function FBpostAdminPanel() {
@@ -44,9 +46,7 @@ function FBpostAdminPanel() {
           `${import.meta.env.VITE_API_URL}/api/facebook-embeds/${editId}`,
           { url: fbUrl },
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            withCredentials: true,
           }
         );
         alert("Post updated successfully.");
@@ -55,9 +55,7 @@ function FBpostAdminPanel() {
           `${import.meta.env.VITE_API_URL}/api/facebook-embeds`,
           { url: fbUrl },
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            withCredentials: true,
           }
         );
         alert("Post added successfully.");
@@ -83,9 +81,7 @@ function FBpostAdminPanel() {
     try {
       setLoading(true);
       await axios.delete(`${import.meta.env.VITE_API_URL}/api/facebook-embeds/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        withCredentials: true,
       });
       alert("Post deleted successfully.");
       fetchPosts();
@@ -141,32 +137,45 @@ function FBpostAdminPanel() {
         <div className="mt-10">
           <h2 className="text-xl font-semibold mb-4">Saved Posts</h2>
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map((post) => (
+            {(loading ? Array(3).fill({}) : posts).map((post, index) => (
               <li
-                key={post._id}
+                key={post._id || index}
                 className="border rounded-lg p-4 bg-white shadow-md flex flex-col justify-between h-[380px]"
               >
                 <div className="w-full overflow-hidden rounded-md mb-4 h-[380px]">
-                   <FacebookPost url={post.url} />
+                  {loading ? (
+                    <Skeleton height={300} />
+                  ) : (
+                    <FacebookPost url={post.url} />
+                  )}
                 </div>
 
                 <div className="flex gap-3 mt-auto">
-                  <button
-                    onClick={() => handleEdit(post)}
-                    className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md transition"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(post._id)}
-                    className="flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition"
-                  >
-                    Delete
-                  </button>
+                  {loading ? (
+                    <>
+                      <Skeleton height={40} width="100%" />
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => handleEdit(post)}
+                        className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md transition"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(post._id)}
+                        className="flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition"
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
                 </div>
               </li>
             ))}
           </ul>
+
         </div>
       </main>
     </div>

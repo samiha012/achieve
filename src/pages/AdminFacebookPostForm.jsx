@@ -14,14 +14,14 @@ function FacebookPostForm({ type }) {
 
     try {
       if (type === "text") {
-        const response = await axios.post(`${apiBaseUrl}/api/post-text`, { caption });
+        const response = await axios.post(`${apiBaseUrl}/post-text`, { caption });
         alert("Text posted! ID: ");
       } else {
         const formData = new FormData();
         formData.append("caption", caption);
         formData.append("media", media);
 
-        const endpoint = type === "photo" ? "/api/post-photo" : "/api/post-video";
+        const endpoint = type === "photo" ? "/post-photo" : "/post-video";
         const response = await axios.post(`${apiBaseUrl}${endpoint}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });

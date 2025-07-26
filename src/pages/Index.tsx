@@ -7,15 +7,20 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ContactForm from '@/components/ContactForm';
 import Testimonials from '@/components/Testimonial';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Index = () => {
   const [popularCourses, setPopularCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const skeletonArray = Array(5).fill(0);
 
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
         const baseURL = import.meta.env.VITE_API_URL || '';
         const res = await axios.get(`${baseURL}/api/courses/featured`);
+        setLoading(false)
         setPopularCourses(res.data);
       } catch (error) {
         console.error('Error fetching featured courses:', error);
@@ -161,38 +166,63 @@ const Index = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-8">
-            {popularCourses.map((course, index) => (
-              <Card key={course.productId || index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden w-full max-w-sm bg-gray-50">
+            {(loading ? skeletonArray : popularCourses).map((course, index) => (
+              <Card
+                key={course?.productId || index}
+                className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden w-full max-w-sm bg-gray-50"
+              >
                 <div className="relative">
-                  <img
-                    src={course.ProductImage}
-                    alt={course.productName}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  {loading ? (
+                    <Skeleton height={200} />
+                  ) : (
+                    <img
+                      src={course.ProductImage}
+                      alt={course.productName}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  )}
                 </div>
                 <CardContent className="px-6 py-2">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{course.productFullName}</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    {loading ? <Skeleton width={200} /> : course.productFullName}
+                  </h3>
 
                   <div className="flex items-center mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
-                    ))}
-                    <span className="ml-2 text-sm text-gray-600">(5)</span>
+                    {loading ? (
+                      <Skeleton width={100} />
+                    ) : (
+                      <>
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
+                        ))}
+                        <span className="ml-2 text-sm text-gray-600">(5)</span>
+                      </>
+                    )}
                   </div>
 
                   <div className="flex items-center justify-between mb-4">
-                    <div className="text-2xl font-bold text-blue-600">৳{course.currency_amount}</div>
-                    <div className="text-sm text-gray-500 line-through">
-                      ৳{parseInt(course.currency_amount) + 500}
-                    </div>
+                    {loading ? (
+                      <Skeleton width={100} />
+                    ) : (
+                      <>
+                        <div className="text-2xl font-bold text-blue-600">৳{course.currency_amount}</div>
+                        <div className="text-sm text-gray-500 line-through">
+                          ৳{parseInt(course.currency_amount) + 500}
+                        </div>
+                      </>
+                    )}
                   </div>
 
-                  <a href={course.Permalink} target="_blank" rel="noopener noreferrer">
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700 group">
-                      View Details
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </a>
+                  {loading ? (
+                    <Skeleton height={36} />
+                  ) : (
+                    <a href={course.Permalink} target="_blank" rel="noopener noreferrer">
+                      <Button className="w-full bg-blue-600 hover:bg-blue-700 group">
+                        View Details
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </a>
+                  )}
                 </CardContent>
                 <br />
               </Card>
