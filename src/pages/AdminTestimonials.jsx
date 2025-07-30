@@ -1,43 +1,15 @@
 import { useState, useEffect } from "react";
 import { HiPlus, HiViewList, HiTrash } from 'react-icons/hi';
 import { HiBellAlert } from "react-icons/hi2";
+import Loader from "../components/Loader";
+import LoaderOverlay from '../components/LoaderOverlay';
+import ConfirmModal from '../components/ConfirmModal';
 
 const SIDEBAR_OPTIONS = [
   { key: "add", label: "Add Testimonial", icon: HiPlus },
   { key: "show", label: "Show All Testimonials", icon: HiViewList },
   { key: "delete", label: "Delete Testimonial", icon: HiTrash },
 ];
-
-// Loader Component
-function Loader({ size = "md", color = "blue" }) {
-  const sizeClasses = {
-    sm: "w-4 h-4",
-    md: "w-8 h-8",
-    lg: "w-12 h-12"
-  };
-  
-  const colorClasses = {
-    blue: "border-blue-500",
-    white: "border-white",
-    gray: "border-gray-400"
-  };
-
-  return (
-    <div className={`${sizeClasses[size]} ${colorClasses[color]} border-2 border-t-transparent rounded-full animate-spin`}></div>
-  );
-}
-
-// Full page loader overlay
-function LoaderOverlay({ message = "Loading..." }) {
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 flex flex-col items-center gap-4 shadow-xl">
-        <Loader size="lg" />
-        <p className="text-gray-700 font-medium">{message}</p>
-      </div>
-    </div>
-  );
-}
 
 function getInitials(name) {
   return name
@@ -57,6 +29,8 @@ function AdminTestimonials() {
   const [submitting, setSubmitting] = useState(false);
   const [deletingIndex, setDeletingIndex] = useState(null);
   const [error, setError] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   // Fetch all testimonials
   useEffect(() => {
@@ -92,7 +66,7 @@ function AdminTestimonials() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    
+
     if (editingIndex !== null) {
       // Edit
       try {
@@ -146,6 +120,20 @@ function AdminTestimonials() {
     setSidebarOption("add");
   };
 
+  const handleDeleteClick = (idx) => {
+    setDeleteTarget(idx);
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (deleteTarget !== null) {
+      setShowDeleteModal(false); // Close modal immediately
+      const targetIndex = deleteTarget;
+      setDeleteTarget(null); // Reset target
+      await handleDelete(targetIndex); // Handle deletion
+    }
+  };
+
   const handleDelete = async (idx) => {
     setDeletingIndex(idx);
     try {
@@ -162,7 +150,7 @@ function AdminTestimonials() {
     } finally {
       setDeletingIndex(null);
     }
-    
+
     if (editingIndex === idx) {
       setForm({ name: "", position: "", text: "" });
       setEditingIndex(null);
@@ -170,10 +158,17 @@ function AdminTestimonials() {
   };
 
   return (
-    <div className="w-full bg-slate-100 flex justify-center items-start py-4 md:py-10">
+    <div className="w-full flex justify-center items-start py-4 md:py-10">
       {/* Loading overlay for initial page load */}
       {loading && <LoaderOverlay message="Loading testimonials..." />}
-      
+
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleDeleteConfirm}
+        message="Are you sure you want to delete this testimonial?"
+      />
+
       <div className="flex flex-col lg:flex-row w-full max-w-7xl bg-white rounded-none md:rounded-2xl overflow-hidden relative mx-2 md:mx-0">
         {toast.message && (
           <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded shadow-lg animate-fade-in-out text-white ${toast.type === 'error' ? 'bg-red-600' : 'bg-green-500'}`}>
@@ -301,7 +296,7 @@ function AdminTestimonials() {
                           Edit
                         </button>
                         <button
-                          onClick={() => handleDelete(idx)}
+                          onClick={() => handleDeleteClick(idx)}
                           disabled={deletingIndex === idx}
                           className="flex-1 bg-red-600 text-white border-none px-4 py-1.5 rounded-md font-medium text-sm md:text-base hover:bg-red-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >

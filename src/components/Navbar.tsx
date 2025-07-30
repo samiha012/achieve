@@ -22,9 +22,9 @@ const Navbar = () => {
 
   // Admin navigation links based on your actual admin routes
   const adminLinks = [
+    { to: "/admin/courses", label: "Courses", icon: BookOpen },
     { to: "/admin/testimonials", label: "Testimonials", icon: MessageSquare },
     { to: "/admin/notice", label: "Notice", icon: Megaphone },
-    { to: "/admin/courses", label: "Courses", icon: BookOpen },
     { to: "/admin/fbpost", label: "FB Posts", icon: Facebook },
     { to: "/admin/fb", label: "Facebook", icon: Facebook }
   ];

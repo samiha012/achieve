@@ -10,6 +10,7 @@ import Courses from "./pages/Courses";
 import Layout from './components/Layout';
 import About from "./pages/About";
 import Notice from "./pages/Notice";
+import Spinner from "./components/ui/Spinner";
 // import FacebookPosts from "./pages/FacebookPosts";
 
 //admin routes
@@ -25,7 +26,7 @@ function RequireAuth({ children }) {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner message="Checking authentication..." />;
   }
 
   if (!isAuthenticated) {

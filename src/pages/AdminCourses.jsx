@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import LoaderOverlay from '../components/LoaderOverlay';
+import Loader from '../components/Loader';
 
 const API_URL = `${import.meta.env.VITE_API_URL}/api/product/achieve-courses?uid=${import.meta.env.VITE_UID}`;
 const BACKEND_URL = `${import.meta.env.VITE_API_URL}/api/courses`;
@@ -7,11 +9,13 @@ const BACKEND_URL = `${import.meta.env.VITE_API_URL}/api/courses`;
 const FeaturedCoursesAdmin = () => {
   const [courses, setCourses] = useState([]);
   const [featuredList, setFeaturedList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [togglingCourseId, setTogglingCourseId] = useState(null);
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
+        setLoading(true);
         const [courseRes, featuredRes] = await Promise.all([
           axios.get(API_URL),
           axios.get(`${BACKEND_URL}/featured`)
@@ -21,7 +25,9 @@ const FeaturedCoursesAdmin = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setLoading(false);
+      }
+      finally {
+        setLoading(false); // Add this
       }
     };
 
@@ -30,8 +36,9 @@ const FeaturedCoursesAdmin = () => {
 
   const handleToggle = async (course) => {
     try {
+      setTogglingCourseId(course.productId);
       await axios.post(`${BACKEND_URL}/toggle-feature`, { course }, {
-         withCredentials: true,
+        withCredentials: true,
       });
       setFeaturedList(prev => {
         const exists = prev.some(c => c.productId === course.productId);
@@ -44,12 +51,15 @@ const FeaturedCoursesAdmin = () => {
     } catch (error) {
       console.error('Error toggling featured:', error);
     }
+    finally {
+      setTogglingCourseId(null); // Clear after toggle
+    }
   };
-
-  if (loading) return <div className="p-4">Loading...</div>;
 
   return (
     <div className="w-full rounded-3xl p-8 md:p-12 relative overflow-hidden">
+
+      {loading && <LoaderOverlay message="Loading courses..." />}
 
       {/* Header */}
       <div className="relative z-10 mb-10">
@@ -67,10 +77,17 @@ const FeaturedCoursesAdmin = () => {
             <div
               key={course.productId}
               className={`group relative bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 transform hover:-translate-y-2 ${isFeatured
-                  ? 'border-blue-400 bg-gradient-to-br from-blue-100 to-white shadow-blue-200/50'
-                  : 'border-slate-200 hover:border-blue-300'
+                ? 'border-blue-400 bg-gradient-to-br from-blue-100 to-white shadow-blue-200/50'
+                : 'border-slate-200 hover:border-blue-300'
                 }`}
             >
+              {/* Loader Overlay */}
+              {togglingCourseId === course.productId && (
+                <div className="absolute inset-0 z-30 bg-white/70 flex rounded-2xl items-center justify-center backdrop-blur-sm">
+                  <Loader></Loader>
+                </div>
+              )}
+
               {/* Featured Badge */}
               {isFeatured && (
                 <div className="absolute top-4 right-4 z-20 bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
@@ -100,8 +117,8 @@ const FeaturedCoursesAdmin = () => {
                       className="sr-only"
                     />
                     <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${isFeatured
-                        ? 'bg-blue-500 border-blue-500'
-                        : 'border-slate-300 hover:border-blue-400'
+                      ? 'bg-blue-500 border-blue-500'
+                      : 'border-slate-300 hover:border-blue-400'
                       }`}>
                       {isFeatured && (
                         <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
