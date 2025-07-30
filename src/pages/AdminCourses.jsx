@@ -20,7 +20,8 @@ const FeaturedCoursesAdmin = () => {
           axios.get(API_URL),
           axios.get(`${BACKEND_URL}/featured`)
         ]);
-        setCourses(courseRes.data.courses);
+        const activeCourses = (courseRes.data.courses || []).filter(course => course.status !== 'Disable');
+        setCourses(activeCourses);
         setFeaturedList(featuredRes.data);
         setLoading(false);
       } catch (error) {
