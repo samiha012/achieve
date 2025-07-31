@@ -109,7 +109,7 @@ const Index = () => {
                     Explore Branches
                   </Button>
                 </Link>
-                <Link to="/courses" target="_blank">
+                <Link to="/courses">
                   <Button
                     variant="ghost"
                     size="lg"
