@@ -84,7 +84,7 @@ const FeaturedCoursesAdmin = () => {
             >
               {/* Loader Overlay */}
               {togglingCourseId === course.productId && (
-                <div className="absolute inset-0 z-30 bg-white/70 flex rounded-2xl items-center justify-center backdrop-blur-sm">
+                <div className="absolute inset-0 z-30 bg-white/60 flex rounded-2xl items-center justify-center backdrop-blur-sm">
                   <Loader></Loader>
                 </div>
               )}

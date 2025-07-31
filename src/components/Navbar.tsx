@@ -26,7 +26,7 @@ const Navbar = () => {
     { to: "/admin/testimonials", label: "Testimonials", icon: MessageSquare },
     { to: "/admin/notice", label: "Notice", icon: Megaphone },
     { to: "/admin/fbpost", label: "FB Posts", icon: Facebook },
-    { to: "/admin/fb", label: "Facebook", icon: Facebook }
+    // { to: "/admin/fb", label: "Facebook", icon: Facebook }
   ];
 
   // Choose which links to display based on admin status

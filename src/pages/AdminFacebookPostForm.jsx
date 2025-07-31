@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import Loader from "../components/Loader";
+
 
 function FacebookPostForm({ type }) {
   const [caption, setCaption] = useState("");
   const [media, setMedia] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState({ message: '', type: 'success' });
+  const fileInputRef = useRef(null);
 
   const apiBaseUrl = import.meta.env.VITE_API_URL;
+
+  const showToast = (msg, type = 'success') => {
+    setToast({ message: msg, type });
+    setTimeout(() => setToast({ message: '', type: 'success' }), 3000);
+  };
 
   const handlePost = async (e) => {
     e.preventDefault();
@@ -18,7 +26,7 @@ function FacebookPostForm({ type }) {
         const response = await axios.post(`${apiBaseUrl}/api/posts/post-text`, { caption }, {
           withCredentials: true,
         });
-        alert("Text posted! ID: ");
+        showToast('Text posted to Facebook Page!');
       } else {
         const formData = new FormData();
         formData.append("caption", caption);
@@ -33,16 +41,15 @@ function FacebookPostForm({ type }) {
             withCredentials: true,
           }
         );
-
-
-        alert(`${type} posted!`);
+        showToast(`${type} posted on Facebook page!`);
       }
 
       setCaption("");
       setMedia(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (err) {
       console.error(err);
-      alert("Failed to post.");
+      showToast("Failed to post.", 'error');
     } finally {
       setLoading(false);
     }
@@ -50,6 +57,11 @@ function FacebookPostForm({ type }) {
 
   return (
     <form onSubmit={handlePost} className="space-y-4">
+      {toast.message && (
+        <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded shadow-lg transition-all duration-300 text-white ${toast.type === 'error' ? 'bg-red-600' : 'bg-green-500'}`}>
+          {toast.message}
+        </div>
+      )}
       <textarea
         placeholder="Caption..."
         className="w-full border p-2 rounded"
@@ -61,6 +73,7 @@ function FacebookPostForm({ type }) {
       {type !== "text" && (
         <input
           type="file"
+          ref={fileInputRef}
           accept={type === "video" ? "video/*" : "image/*"}
           onChange={(e) => setMedia(e.target.files[0])}
           required
