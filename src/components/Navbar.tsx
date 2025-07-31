@@ -47,30 +47,28 @@ const Navbar = () => {
                 key={link.to}
                 to={link.to}
                 className={`flex items-center gap-2 transition-colors ${isAdmin
-                  ? 'text-gray-700 hover:text-red-600'
+                  ? 'text-gray-700 hover:text-purple-600'
                   : 'text-gray-700 hover:text-blue-600'
                   }`}
               >
                 {link.icon && (
-                  <link.icon className={`h-4 w-4 ${isAdmin ? 'text-red-600' : 'text-blue-600'}`} />
+                  <link.icon className={`h-4 w-4 ${isAdmin ? 'text-purple-600' : 'text-blue-600'}`} />
                 )}
-                <span className={link.label === "Notice" ? "font-semibold" : ""}>
-                  {link.label}
-                </span>
+                <span> {link.label} </span>
               </Link>
             ))}
 
             {/* Admin indicator badge */}
             {isAdmin && (
               <>
-                <div className="flex items-center gap-2 px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">
+                <div className="flex items-center gap-2 px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
                   <Shield className="h-4 w-4" />
                   Admin
                 </div>
                 <Button
                   onClick={logout}
                   variant="outline"
-                  className="border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300"
+                  className="border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300 hover:text-red-800"
                 >
                   Logout
                 </Button>

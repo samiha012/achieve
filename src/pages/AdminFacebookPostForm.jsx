@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import Loader from "../components/Loader";
 
 function FacebookPostForm({ type }) {
   const [caption, setCaption] = useState("");
@@ -14,17 +15,25 @@ function FacebookPostForm({ type }) {
 
     try {
       if (type === "text") {
-        const response = await axios.post(`${apiBaseUrl}/post-text`, { caption });
+        const response = await axios.post(`${apiBaseUrl}/api/posts/post-text`, { caption }, {
+          withCredentials: true,
+        });
         alert("Text posted! ID: ");
       } else {
         const formData = new FormData();
         formData.append("caption", caption);
         formData.append("media", media);
 
-        const endpoint = type === "photo" ? "/post-photo" : "/post-video";
-        const response = await axios.post(`${apiBaseUrl}${endpoint}`, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        const endpoint = type === "photo" ? "/api/posts/post-photo" : "/api/posts/post-video";
+        const response = await axios.post(
+          `${apiBaseUrl}${endpoint}`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: true,
+          }
+        );
+
 
         alert(`${type} posted!`);
       }
@@ -60,10 +69,10 @@ function FacebookPostForm({ type }) {
 
       <button
         type="submit"
-        className="bg-green-600 text-white px-4 py-2 rounded"
+        className="bg-green-600 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         disabled={loading}
       >
-        {loading ? "Posting..." : `Post ${type}`}
+        {loading ? <>  <Loader size="sm" color="white" /> Posting ... </> : `Post ${type}`}
       </button>
     </form>
   );
