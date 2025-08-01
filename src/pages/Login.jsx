@@ -19,7 +19,7 @@ function Login() {
         if (res.ok) {
           const data = await res.json();
           if (data.user.role === 'superadmin') {
-            navigate("/admin", { replace: true });
+            navigate("/admin/courses", { replace: true });
           } else {
             navigate("/admin/courses", { replace: true });
           }
@@ -40,7 +40,7 @@ function Login() {
       const userData = await login(email, password);
       // Handle redirect based on role after successful login
       if (userData.role === 'superadmin') {
-        navigate("/admin", { replace: true });
+        navigate("/admin/courses", { replace: true });
       } else {
         navigate("/admin/courses", { replace: true });
       }

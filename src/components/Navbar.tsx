@@ -26,7 +26,7 @@ const Navbar = () => {
     { to: "/admin/testimonials", label: "Testimonials", icon: MessageSquare },
     { to: "/admin/notice", label: "Notice", icon: Megaphone },
     { to: "/admin/fbpost", label: "FB Posts", icon: Facebook },
-    ...(isSuperAdmin ? [{ to: "/admin", label: "Manage Admins", icon: Users }] : []),
+    // ...(isSuperAdmin ? [{ to: "/admin", label: "Manage Admins", icon: Users }] : []),
     // { to: "/admin/fb", label: "Facebook", icon: Facebook }
   ];
 
