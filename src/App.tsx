@@ -21,6 +21,7 @@ import { useAuth } from "./context/AuthContext";
 import AdminNotice from "./pages/AdminNotice";
 import FBpost from "./pages/AdminFBpost";
 import FacebookPostPage from "./pages/AdminFacebookPostPage";
+import AdminManagement from "./pages/AdminManagement";
 
 function RequireAuth({ children }) {
   const { isAuthenticated, loading } = useAuth();
@@ -57,6 +58,7 @@ const App = () => (
             <Route path="/admin/courses" element={<RequireAuth><AdminCourses /></RequireAuth>} />
             <Route path="/admin/fbpost" element={<RequireAuth><FBpost /></RequireAuth>} />
             <Route path="/admin/fb" element={<RequireAuth><FacebookPostPage /></RequireAuth>} />
+            <Route path="/admin" element={<RequireAuth><AdminManagement /></RequireAuth>} />
             <Route path="*" element={<NotFound />} />
             {/* <Route path="/facebook-posts" element={<FacebookPosts />} /> */}
           </Routes>
