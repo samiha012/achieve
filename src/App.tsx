@@ -11,6 +11,8 @@ import Layout from './components/Layout';
 import About from "./pages/About";
 import Notice from "./pages/Notice";
 import Spinner from "./components/ui/Spinner";
+import RequireSuperAdmin from "./components/RequireSuperAdmin";
+
 // import FacebookPosts from "./pages/FacebookPosts";
 
 //admin routes
@@ -47,19 +49,30 @@ const App = () => (
       <BrowserRouter>
         <Layout>
           <Routes>
+            {/* Public routes */}
             <Route path="/" element={<Index />} />
             <Route path="/features" element={<About />} />
             <Route path="/notice" element={<Notice />} />
             <Route path="/branches" element={<Branches />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/admin/login" element={<Login />} />
+
+            {/* Regular admin routes */}
             <Route path="/admin/testimonials" element={<RequireAuth><AdminTestimonials /></RequireAuth>} />
             <Route path="/admin/notice" element={<RequireAuth><AdminNotice /></RequireAuth>} />
             <Route path="/admin/courses" element={<RequireAuth><AdminCourses /></RequireAuth>} />
             <Route path="/admin/fbpost" element={<RequireAuth><FBpost /></RequireAuth>} />
             <Route path="/admin/fb" element={<RequireAuth><FacebookPostPage /></RequireAuth>} />
-            <Route path="/admin" element={<RequireAuth><AdminManagement /></RequireAuth>} />
+
+            {/* Superadmin only routes */}
+            <Route path="/admin" element={
+              <RequireSuperAdmin>
+                <AdminManagement />
+              </RequireSuperAdmin>
+            } />
+
             <Route path="*" element={<NotFound />} />
+
             {/* <Route path="/facebook-posts" element={<FacebookPosts />} /> */}
           </Routes>
         </Layout>

@@ -17,7 +17,12 @@ function Login() {
           credentials: "include",
         });
         if (res.ok) {
-          navigate("/admin/courses", { replace: true });
+          const data = await res.json();
+          if (data.user.role === 'superadmin') {
+            navigate("/admin", { replace: true });
+          } else {
+            navigate("/admin/courses", { replace: true });
+          }
         }
       } catch (err) {
         // Not logged in, server down, invalid token handle
@@ -32,8 +37,13 @@ function Login() {
     setLoading(true);
     setError("");
     try {
-      await login(email, password); // 🔥 now calling context login
-      navigate("/admin/courses", { replace: true });
+      const userData = await login(email, password);
+      // Handle redirect based on role after successful login
+      if (userData.role === 'superadmin') {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/admin/courses", { replace: true });
+      }
     } catch (err) {
       setError(err.message);
     } finally {

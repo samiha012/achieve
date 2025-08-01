@@ -40,6 +40,7 @@ export function AuthProvider({ children }) {
     if (!res.ok) throw new Error(data.message || "Login failed");
 
     setUser(data.admin);
+    return data.admin;
   };
 
   const logout = async () => {
@@ -61,9 +62,10 @@ export function AuthProvider({ children }) {
   };
 
   const isAuthenticated = !!user;
+  const isSuperAdmin = user?.role === 'superadmin';
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout, loading, isSuperAdmin }}>
       {children}
     </AuthContext.Provider>
   );

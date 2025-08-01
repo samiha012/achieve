@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, isSuperAdmin } = useAuth();
 
   // Check if user is admin (user exists means they're authenticated admin)
   const isAdmin = isAuthenticated && user;
@@ -26,6 +26,7 @@ const Navbar = () => {
     { to: "/admin/testimonials", label: "Testimonials", icon: MessageSquare },
     { to: "/admin/notice", label: "Notice", icon: Megaphone },
     { to: "/admin/fbpost", label: "FB Posts", icon: Facebook },
+    ...(isSuperAdmin ? [{ to: "/admin", label: "Manage Admins", icon: Users }] : []),
     // { to: "/admin/fb", label: "Facebook", icon: Facebook }
   ];
 
@@ -54,7 +55,7 @@ const Navbar = () => {
                 {link.icon && (
                   <link.icon className={`h-4 w-4 ${isAdmin ? 'text-purple-600' : 'text-blue-600'}`} />
                 )}
-                <span> {link.label} </span>
+                <span>{link.label}</span>
               </Link>
             ))}
 
@@ -63,7 +64,7 @@ const Navbar = () => {
               <>
                 <div className="flex items-center gap-2 px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
                   <Shield className="h-4 w-4" />
-                  Admin
+                  {isSuperAdmin ? 'Super Admin' : 'Admin'}
                 </div>
                 <Button
                   onClick={logout}
@@ -93,9 +94,9 @@ const Navbar = () => {
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
               {/* Admin indicator for mobile */}
               {isAdmin && (
-                <div className="flex items-center gap-2 px-3 py-2 bg-red-100 text-red-700 rounded-lg text-sm font-medium mx-2 mb-2">
+                <div className="flex items-center gap-2 px-3 py-2 bg-purple-100 text-purple-700 rounded-lg text-sm font-medium mx-2 mb-2">
                   <Shield className="h-4 w-4" />
-                  Admin Mode
+                  {isSuperAdmin ? 'Super Admin' : 'Admin'}
                 </div>
               )}
 
@@ -125,6 +126,20 @@ const Navbar = () => {
                     <Link to="/courses" target='_blank' onClick={() => setIsMobileMenuOpen(false)}>
                       Courses
                     </Link>
+                  </Button>
+                </div>
+              )}
+              {isAdmin && (
+                <div className="px-3 py-2">
+                  <Button
+                    onClick={() => {
+                      logout();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    variant="outline"
+                    className="w-full border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300 hover:text-red-800"
+                  >
+                    Logout
                   </Button>
                 </div>
               )}

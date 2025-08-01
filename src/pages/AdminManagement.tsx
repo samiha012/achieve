@@ -6,17 +6,29 @@ import ConfirmModal from '../components/ConfirmModal';
 interface Admin {
   _id: string;
   email: string;
-  branch: Branch;
-  role: string;
+  password: string;
+  branch: {
+    _id: string;
+    text: string;
+    address: string;
+  };
+  role: 'admin';
   createdAt: string;
 }
 
 interface Branch {
-  _id: string;
-  name: string;
+  id: string;
+  text: string;
   address: string;
-  phone?: string;
   email?: string;
+  phone?: string;
+  photo?: string;
+  gmap?: string;
+}
+
+interface BranchResponse {
+  status: number;
+  branchList: Branch[];
 }
 
 const AdminManagement = () => {
@@ -55,46 +67,11 @@ const AdminManagement = () => {
 
   const fetchBranches = async () => {
     try {
-      setLoading(true);
-      const formData = new URLSearchParams();
-
-      // DataTables required parameters
-      formData.append('draw', '1');
-      formData.append('start', '0');
-      formData.append('length', '100'); // Fetch all branches for admin selection
-
-      // Column definitions
-      const columnNames = [
-        'name', 'photo', 'address', 'phone', 'email',
-        'coach', 'tagline', 'instruction', 'gmap', 'updated', 'created', 'status'
-      ];
-
-      columnNames.forEach((col, index) => {
-        formData.append(`columns[${index}][data]`, col);
-        formData.append(`columns[${index}][name]`, '');
-        formData.append(`columns[${index}][searchable]`, 'true');
-        formData.append(`columns[${index}][orderable]`, 'true');
-        formData.append(`columns[${index}][search][value]`, '');
-        formData.append(`columns[${index}][search][regex]`, 'false');
-      });
-
-       const response = await fetch('/.netlify/functions/proxy/branch/all', {
-      //const response = await fetch(`${import.meta.env.VITE_CRM_URL}/branch/all?uid=GbpNqKDUQqU5ZHo3qyEs2EvbtL32`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formData.toString(),
-      });
-
-      if (!response.ok) throw new Error('Failed to fetch branches');
-
-      const data = await response.json();
-      setBranches(data.data || []);
-    } catch (err: any) {
-      setError(err.message || 'Error fetching branches');
-    } finally {
-      setLoading(false);
+      const res = await fetch(`${import.meta.env.VITE_CRM_URL}/branch/all-branches`);
+      const data = await res.json();
+      setBranches(data.branchList)
+    } catch (error) {
+      setError('Failed to fetch branches');
     }
   };
 
@@ -105,25 +82,54 @@ const AdminManagement = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
+
+    // Validation
+    if (!form.email || !form.branch || (!editingAdmin && !form.password)) {
+      setError('Please fill in all required fields');
+      setLoading(false);
+      return;
+    }
+
     try {
-      const url = editingAdmin 
+      const url = editingAdmin
         ? `${import.meta.env.VITE_API_URL}/api/admin/${editingAdmin._id}`
         : `${import.meta.env.VITE_API_URL}/api/admin/create`;
-      
+
       const method = editingAdmin ? 'PUT' : 'POST';
-      
-      await fetch(url, {
+
+      // Only include password in payload if it's provided (for editing)
+      const payload = {
+        email: form.email,
+        branch: form.branch,
+        ...(form.password && { password: form.password })
+      };
+
+      const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify(form)
+        body: JSON.stringify(payload)
       });
 
-      fetchAdmins();
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to save admin');
+      }
+
+      await fetchAdmins(); // Refetch the updated list
       setForm({ email: '', password: '', branch: '' });
       setEditingAdmin(null);
+
+      // Show success message (assuming you have a toast function)
+      // toast({
+      //   title: `Admin ${editingAdmin ? 'updated' : 'created'} successfully`,
+      //   type: 'success'
+      // });
+
     } catch (error) {
-      setError('Failed to save admin');
+      const message = error instanceof Error ? error.message : 'Failed to save admin';
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -149,7 +155,7 @@ const AdminManagement = () => {
   return (
     <div className="container mx-auto p-6">
       {loading && <LoaderOverlay />}
-      
+
       <ConfirmModal
         isOpen={showDeleteModal}
         onClose={() => {
@@ -183,25 +189,33 @@ const AdminManagement = () => {
               className="w-full p-2 border rounded"
               required={!editingAdmin}
             />
-             <select
+            <select
               value={form.branch}
               onChange={(e) => setForm({ ...form, branch: e.target.value })}
               className="w-full p-2 border rounded"
               required
             >
               <option value="">Select Branch</option>
-              {branches.map(branch => (
-                <option key={branch._id} value={branch._id}>
-                  {branch.name} - {branch.address}
+              {branches && branches.map(branch => (
+                <option key={branch.id} value={branch.id}>
+                  {branch.text} - {branch.address}
                 </option>
               ))}
             </select>
             <div className="flex gap-2">
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                disabled={loading}
+                className={`px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center gap-2`}
               >
-                {editingAdmin ? 'Update' : 'Create'}
+                {loading ? (
+                  <>
+                    <LoaderOverlay />
+                    {editingAdmin ? 'Updating...' : 'Creating...'}
+                  </>
+                ) : (
+                  editingAdmin ? 'Update' : 'Create'
+                )}
               </button>
               {editingAdmin && (
                 <button
@@ -225,14 +239,14 @@ const AdminManagement = () => {
           {error && <div className="text-red-500 mb-4">{error}</div>}
           <div className="space-y-4">
             {admins.map(admin => (
-              <div 
-                key={admin._id} 
+              <div
+                key={admin._id}
                 className="border p-4 rounded flex justify-between items-center"
               >
                 <div>
                   <p className="font-medium">{admin.email}</p>
                   <p className="text-sm text-gray-500">
-                    Branch: {admin.branch?.name}
+                    Branch: {admin.branch?.text}
                   </p>
                 </div>
                 <div className="flex gap-2">
