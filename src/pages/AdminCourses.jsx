@@ -3,7 +3,7 @@ import axios from 'axios';
 import LoaderOverlay from '../components/LoaderOverlay';
 import Loader from '../components/Loader';
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api/product/achieve-courses?uid=${import.meta.env.VITE_UID}`;
+const API_URL = `/.netlify/functions/proxy/product/achieve-courses`;
 const BACKEND_URL = `${import.meta.env.VITE_API_URL}/api/courses`;
 
 const FeaturedCoursesAdmin = () => {
