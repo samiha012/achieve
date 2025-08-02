@@ -14,7 +14,7 @@ export default function RequireSuperAdmin({ children }: { children: React.ReactN
   }
 
   if (!isSuperAdmin) {
-    return <Navigate to="/admin/dashboard" replace />;
+    return <Navigate to="/admin/courses" replace />;
   }
 
   return <>{children}</>;

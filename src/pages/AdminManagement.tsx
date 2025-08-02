@@ -7,11 +7,7 @@ interface Admin {
   _id: string;
   email: string;
   password: string;
-  branch: {
-    _id: string;
-    text: string;
-    address: string;
-  };
+  branch: string;
   role: 'admin';
   createdAt: string;
 }
@@ -246,7 +242,9 @@ const AdminManagement = () => {
                 <div>
                   <p className="font-medium">{admin.email}</p>
                   <p className="text-sm text-gray-500">
-                    Branch: {admin.branch?.text}
+                    Branch: {
+                      branches.find(b => b.id === admin.branch)?.text || 'Unknown'
+                    }
                   </p>
                 </div>
                 <div className="flex gap-2">
@@ -256,7 +254,7 @@ const AdminManagement = () => {
                       setForm({
                         email: admin.email,
                         password: '',
-                        branch: admin.branch._id
+                        branch: admin.branch
                       });
                     }}
                     className="p-2 text-yellow-600 hover:text-yellow-700"
