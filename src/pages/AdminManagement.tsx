@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { HiTrash, HiPencil, HiPlus } from 'react-icons/hi';
 import LoaderOverlay from '../components/LoaderOverlay';
 import ConfirmModal from '../components/ConfirmModal';
+import Loader from "../components/Loader";
 
 interface Admin {
   _id: string;
@@ -35,6 +36,7 @@ const AdminManagement = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [editingAdmin, setEditingAdmin] = useState<Admin | null>(null);
+  const [toast, setToast] = useState({ message: '', type: 'success' });
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -74,6 +76,11 @@ const AdminManagement = () => {
   useEffect(() => {
     fetchBranches();
   }, []);
+
+  const showToast = (msg, type = 'success') => {
+    setToast({ message: msg, type });
+    setTimeout(() => setToast({ message: '', type: 'success' }), 3000);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,12 +123,7 @@ const AdminManagement = () => {
       await fetchAdmins(); // Refetch the updated list
       setForm({ email: '', password: '', branch: '' });
       setEditingAdmin(null);
-
-      // Show success message (assuming you have a toast function)
-      // toast({
-      //   title: `Admin ${editingAdmin ? 'updated' : 'created'} successfully`,
-      //   type: 'success'
-      // });
+      showToast( `Admin ${editingAdmin ? 'updated' : 'created'} successfully`, 'success');
 
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to save admin';
@@ -133,6 +135,7 @@ const AdminManagement = () => {
 
   const handleDelete = async (id: string) => {
     setLoading(true);
+    setShowDeleteModal(false);
     try {
       await fetch(`${import.meta.env.VITE_API_URL}/api/admin/${id}`, {
         method: 'DELETE',
@@ -143,8 +146,9 @@ const AdminManagement = () => {
       setError('Failed to delete admin');
     } finally {
       setLoading(false);
-      setShowDeleteModal(false);
+      
       setDeleteTarget(null);
+      showToast('Admin Deleted', 'error')
     }
   };
 
@@ -161,6 +165,12 @@ const AdminManagement = () => {
         onConfirm={() => deleteTarget && handleDelete(deleteTarget)}
         message="Are you sure you want to delete this admin?"
       />
+
+      {toast.message && (
+          <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded shadow-lg transition-all duration-300 text-white ${toast.type === 'error' ? 'bg-red-600' : 'bg-green-500'}`}>
+            {toast.message}
+          </div>
+        )}
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Admin Form */}

@@ -12,7 +12,12 @@ const SIDEBAR_OPTIONS = [
 
 const NoticeAdmin = () => {
   const [notices, setNotices] = useState([]);
-  const [form, setForm] = useState({ title: '', content: '', imgurl: '' });
+  const [form, setForm] = useState({
+    title: '',
+    content: '',
+    imgurl: '',
+    branch: 'All'
+  });
   const [editingIndex, setEditingIndex] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -24,10 +29,22 @@ const NoticeAdmin = () => {
   const [error, setError] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const [branches, setBranches] = useState([]);
+
+  const fetchBranches = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_CRM_URL}/branch/all-branches`);
+      const data = await res.json();
+      setBranches(data.branchList);
+    } catch (error) {
+      setError('Failed to fetch branches');
+    }
+  };
 
   // Fetch all notices
   useEffect(() => {
     fetchNotices();
+    fetchBranches();
   }, []);
 
   const fetchNotices = async () => {
@@ -113,7 +130,7 @@ const NoticeAdmin = () => {
       }
 
       // Clear form
-      setForm({ title: '', content: '', imgurl: '' });
+      setForm({ title: '', content: '', imgurl: '',  branch: 'All' });
       setImageFile(null);
       if (fileInputRef.current) fileInputRef.current.value = '';
     } catch {
@@ -128,6 +145,7 @@ const NoticeAdmin = () => {
       title: notices[idx].title,
       content: notices[idx].content,
       imgurl: notices[idx].imgurl || '',
+      branch: notices[idx].branch || 'All'
     });
     setEditingIndex(idx);
     setSidebarOption('add');
@@ -245,6 +263,20 @@ const NoticeAdmin = () => {
                     disabled={submitting}
                     className="p-3 rounded-md border border-slate-300 text-base resize-vertical disabled:bg-gray-100 disabled:cursor-not-allowed"
                   />
+                  <select
+                    name="branch"
+                    value={form.branch}
+                    onChange={handleChange}
+                    disabled={submitting}
+                    className="p-3 rounded-md border border-slate-300 text-base disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  >
+                    <option value="All">All Branches</option>
+                    {branches.map(branch => (
+                      <option key={branch.id} value={branch.text}>
+                        {branch.text}
+                      </option>
+                    ))}
+                  </select>
                   <input
                     type="file"
                     accept="image/*"
@@ -318,7 +350,7 @@ const NoticeAdmin = () => {
                           Edit
                         </button>
                         <button
-                          onClick={() =>  handleDeleteClick(idx)}
+                          onClick={() => handleDeleteClick(idx)}
                           disabled={deletingIndex === idx}
                           className="flex-1 bg-red-600 text-white border-none px-4 py-1.5 rounded-md font-medium text-sm md:text-base hover:bg-red-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >

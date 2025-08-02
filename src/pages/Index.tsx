@@ -89,14 +89,15 @@ const Index = () => {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-20">
-            <div className="space-y-10 text-center md:text-left">
-              <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-                Excel in Your
-                <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mx-2">Exams</span>
+            <div className="space-y-6 text-center md:text-left">
+              <h1 className=" leading-tight tracking-tight text-gray-800">
+                <span className='text-4xl lg:text-6xl font-extrabold'>Excel in Your </span>
+                <span className="bg-gradient-to-r font-extrabold from-blue-500 to-purple-500 text-4xl lg:text-6xl bg-clip-text text-transparent mx-2">Exams</span>
                 <br className="hidden md:block" />
-                <span className="text-gray-800">with Achieve Exam Batches</span>
+                <br className="hidden md:block" />
+                <span className="text-gray-700 text-xl lg:text-3xl font-bold">with Achieve Exam Batches</span>
               </h1>
-              <p className="text-lg text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0">
+              <p className="text-lg text-gray-500 leading-relaxed max-w-xl mx-auto md:mx-0">
                 Join thousands of students in our offline exam centers across Bangladesh. Enroll in the best HSC and admission exam batch courses designed for students.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
@@ -122,18 +123,37 @@ const Index = () => {
               </div>
             </div>
             {/* Right Column - Image */}
-            <div className="flex justify-center md:justify-end">
+            <div className="flex justify-center">
+              <div className="relative">
+                <img
+                  src="https://i.postimg.cc/zvp4RbX9/513670571-650677781349136-8449086125678648735-n.jpg"
+                  alt="Hero Illustration"
+                  className="w-full max-w-lg object-contain rounded-2xl shadow-2xl border-4 border-white/80 hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute -bottom-6 -right-6 bg-white/80 rounded-2xl p-6 shadow-lg backdrop-blur-md hidden md:block">
+                  <span className="text-blue-600 font-bold text-lg">Exam Center</span>
+                </div>
+              </div>
+            </div>
+            {/* <div className="flex justify-center md:justify-end">
               <div className="relative">
                 <img
                   src="https://i.postimg.cc/zvp4RbX9/513670571-650677781349136-8449086125678648735-n.jpg"
                   alt="Hero Illustration"
                   className="w-full max-w-md object-contain rounded-2xl shadow-2xl border-4 border-white/80 hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute -bottom-6 -right-6 bg-white/80 rounded-2xl p-3 shadow-lg backdrop-blur-md hidden md:block">
-                  <span className="text-blue-600 font-bold text-lg">Exam Center</span>
+                <div className="absolute -bottom-28 -right-12 w-3/4">
+                  <img
+                    src="https://i.postimg.cc/MKGQ4dF1/508305375-3100296120130494-8979962659710976395-n.jpg"
+                    alt="Secondary Hero Image"
+                    className="w-full h-full object-cover rounded-2xl shadow-2xl border-4 border-white hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute -bottom-6 -right-6 bg-white/80 rounded-2xl p-3 shadow-lg backdrop-blur-md">
+                    <span className="text-blue-600 font-bold text-lg">Exam Center</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 hidden md:block">
