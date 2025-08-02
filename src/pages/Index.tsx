@@ -93,8 +93,8 @@ const Index = () => {
               <h1 className=" leading-tight tracking-tight text-gray-800">
                 <span className='text-4xl lg:text-6xl font-extrabold'>Excel in Your </span>
                 <span className="bg-gradient-to-r font-extrabold from-blue-500 to-purple-500 text-4xl lg:text-6xl bg-clip-text text-transparent mx-2">Exams</span>
-                <br className="hidden md:block" />
-                <br className="hidden md:block" />
+                <br />
+                <br />
                 <span className="text-gray-700 text-xl lg:text-3xl font-bold">with Achieve Exam Batches</span>
               </h1>
               <p className="text-lg text-gray-500 leading-relaxed max-w-xl mx-auto md:mx-0">
