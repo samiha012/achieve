@@ -3,6 +3,9 @@ import axios from 'axios';
 import LoaderOverlay from '../components/LoaderOverlay';
 import Loader from '../components/Loader';
 
+//local dev url
+//const API_URL = `${import.meta.env.VITE_API_URL}/api/product/achieve-courses?uid=${import.meta.env.VITE_UID}`;
+//prod url
 const API_URL = `/.netlify/functions/proxy/product/achieve-courses`;
 const BACKEND_URL = `${import.meta.env.VITE_API_URL}/api/courses`;
 

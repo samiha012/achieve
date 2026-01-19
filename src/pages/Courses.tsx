@@ -22,7 +22,7 @@ const Courses = () => {
       })
       .then((data) => {
         const activeCourses = (data.courses || []).filter(course => course.status !== 'Disable');
-        setCoursesData(activeCourses);
+        setCoursesData(activeCourses.reverse());
         setLoading(false);
       })
       .catch((err) => {
