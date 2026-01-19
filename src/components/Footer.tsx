@@ -69,7 +69,7 @@ export default function Footer() {
       <div className="bg-gray-100 py-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center md:flex md:justify-between">
           <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} Achieve. All rights reserved.
+            &copy; {new Date().getFullYear()} ASG SHOP x Achieve. All rights reserved.
           </p>
           <div className="flex gap-4 justify-center md:justify-start mt-2 md:mt-0">
             <Link to="/privacy" className="text-sm text-gray-500 hover:text-blue-600">Privacy Policy</Link>
