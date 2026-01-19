@@ -75,8 +75,8 @@ const Index = () => {
   };
 
   const studentsCounter = useCounter(20000);
-  const coursesCounter = useCounter(12);
-  const branchesCounter = useCounter(15);
+  const coursesCounter = useCounter(20);
+  const branchesCounter = useCounter(6);
 
   return (
     <div className="min-h-screen bg-white">
